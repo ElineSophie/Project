@@ -1,4 +1,9 @@
-# Programming Project - Number of dementia cases in Europe or internationally
+# Programming Project - Number of dementia cases in the Netherlands
+
+Github Link: https://ElineSophie.github.io/Project/
+
+The idea behind my project is on this page. This page is a template for what my page will look like.
+If you click on the different nav-bars (types of dementia, dementia in the Netherlands, Migration background and dementia), a drawing / sketch will be shown of the page.
 
 ---
 
