@@ -21,6 +21,7 @@ __Solution__
 It is importent that a good overview is provided that gains insight into the disease. In this final project, multiple visualizations will be made that will give insight into different aspects of the disease.
 
 **Different types of dementia and prevalence**
+
 Often, people will think of Alzheimer's disease when hearing about dementia. However, there are different types of dementia.Therefore, to gain insight in the different kind of dementia, a pie chart will be given.
 
 *Main features*
@@ -31,6 +32,7 @@ Often, people will think of Alzheimer's disease when hearing about dementia. How
 - If a disease is clicked within the pie chart, an explanation will be given about the type of dementia.
 
 **Dementia mortality per GGD region**
+
 The lowest mortality rate from dementia is recorded in Zeeland and the North-East Gelderland region. In the middle and south of the Netherlands, the mortality is high.
 
 *Main features*
@@ -38,6 +40,7 @@ The lowest mortality rate from dementia is recorded in Zeeland and the North-Eas
 - At the bottom of the visualization, a button will be given that the user can click to see another visualization on the same page (see deeper knowledge per region)
 
 **Deeper knowledge per region**
+
 Another visualization will be obtained with different data, which shows the prevalence of dementia/dementia mortality per region (no GGD region, these are more regions).
 
 *Main features*
@@ -51,6 +54,7 @@ Another visualization will be obtained with different data, which shows the prev
 - Men vs women as information about the circles in the scatterplot (instead of the next visualization).
 
 **Information about gender vs. dementia**
+
 Dementia becomes more common as we age and women tend to live longer than men. Therefore, more women develop the condition.
 
 *Main features*

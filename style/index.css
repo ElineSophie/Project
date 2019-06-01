@@ -1,0 +1,18 @@
+body, html {
+    height: 100%;
+    margin: 0;
+}
+
+.bg-img {
+  background-image: url("brain.jpg");
+  min-height: 1000px;
+  opacity: 1.0;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
+.inner-container {
+  color:white;
+}
