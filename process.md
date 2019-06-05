@@ -16,6 +16,8 @@ __05-06-2019__
 ---
 On this day, I made the design mark down. Here, I described which visualization will be on each page and i looked for the data that is needed for each visualization.
 
+I also changed my page. 
+
 *Problem*
 
-It was really frustrating which kind of visualization is necessary. 
+It was really frustrating which kind of visualization is necessary.
