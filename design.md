@@ -96,7 +96,7 @@ Components | Description | Implementation
 ---------- | ----------- | --------------
 Data map | A map of the Netherlands on which all the provinces are shown with different colors. It also has a click function for the provinces. When a province is clicked on, another visualization will update| For the data map we need a map of the provinces of the Netherlands. Thereby, the dataset for the prevalence of dementia for each province is needed.
 Scatterplot | This visualization updates with the click function of the data map. If a province is clicked on, one dot of this scatterplot will become bigger. On the y axis is aging and the prevalence of dementia on the x axis for each province | For this visualization, the same dataset is needed, but combined with another dataset with aging (65 + and 80+).
-Two bar graphs | These visualization will update when clicked on provinces. On one bar graph, aging is being shown for each province and the prevalence. On the other bar graph, men vs women will be shown for each province. | The first dataset can be used. 
+Two bar graphs | These visualization will update when clicked on provinces. On one bar graph, aging is being shown for each province and the prevalence. On the other bar graph, men vs women will be shown for each province. | The first dataset can be used.
 
 __Plug ins__
 ---
