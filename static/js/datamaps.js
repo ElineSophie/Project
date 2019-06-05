@@ -14,7 +14,7 @@ var svg = d3.select("body").append("svg")
     .attr("width", width)
     .attr("height", height);
 
-d3.json("nld.json", function(error, nld) {
+d3.json("../data/nld.json", function(error, nld) {
 
     var l = topojson.feature(nld, nld.objects.subunits).features[3],
         b = path.bounds(l),

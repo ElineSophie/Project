@@ -1,0 +1,112 @@
+﻿"DBC-gefinancierde GGZ; zorgtrajecten per diagnose, leeftijd, regio";;;;;
+Geslacht: Mannen;;;;;
+Leeftijd: Totaal;;;;;
+;;;;;
+;Onderwerp;Primaire diagnoses;Primaire diagnoses;Primaire diagnoses;Primaire diagnoses
+;Diagnosen GGZ;2.2 Dementie;2.2 Dementie;2.2 Dementie;2.2 Dementie
+Perioden;Regio's;aantal;per 100.000 inwoners;aantal;per 100.000 inwoners
+2009;Nederland;13405;164;9045;111
+2009;Groningen (PV);635;223;405;142
+2009;Friesland (PV);580;180;435;135
+2009;Drenthe (PV);455;187;325;133
+2009;Overijssel (PV);695;124;430;77
+2009;Flevoland (PV);175;90;135;71
+2009;Gelderland (PV);1095;111;785;80
+2009;Utrecht (PV);765;129;575;96
+2009;Noord-Holland (PV);3275;250;1995;153
+2009;Zuid-Holland (PV);2245;130;1630;95
+2009;Zeeland (PV);345;181;230;122
+2009;Noord-Brabant (PV);1900;156;1225;100
+2009;Limburg (PV);1245;223;880;158
+2010;Nederland;13230;161;9700;118
+2010;Groningen (PV);700;244;470;164
+2010;Friesland (PV);460;142;375;116
+2010;Drenthe (PV);460;189;330;137
+2010;Overijssel (PV);755;133;525;93
+2010;Flevoland (PV);140;72;100;50
+2010;Gelderland (PV);985;100;730;74
+2010;Utrecht (PV);695;116;540;90
+2010;Noord-Holland (PV);3335;253;2380;180
+2010;Zuid-Holland (PV);2240;129;1675;97
+2010;Zeeland (PV);340;180;250;133
+2010;Noord-Brabant (PV);1855;152;1390;114
+2010;Limburg (PV);1265;227;930;167
+2011;Nederland;12560;152;9160;111
+2011;Groningen (PV);745;258;520;180
+2011;Friesland (PV);360;111;290;90
+2011;Drenthe (PV);490;202;350;144
+2011;Overijssel (PV);735;129;530;94
+2011;Flevoland (PV);130;66;110;55
+2011;Gelderland (PV);810;82;610;62
+2011;Utrecht (PV);645;107;505;84
+2011;Noord-Holland (PV);3520;265;2515;189
+2011;Zuid-Holland (PV);1810;104;1340;77
+2011;Zeeland (PV);330;174;240;128
+2011;Noord-Brabant (PV);1810;147;1305;106
+2011;Limburg (PV);1175;211;845;152
+2012;Nederland;10540;127;7895;95
+2012;Groningen (PV);785;272;525;182
+2012;Friesland (PV);310;96;260;80
+2012;Drenthe (PV);405;166;300;124
+2012;Overijssel (PV);595;104;460;81
+2012;Flevoland (PV);100;50;85;43
+2012;Gelderland (PV);560;56;420;42
+2012;Utrecht (PV);615;101;475;78
+2012;Noord-Holland (PV);2735;205;2075;155
+2012;Zuid-Holland (PV);1670;95;1275;73
+2012;Zeeland (PV);220;116;180;95
+2012;Noord-Brabant (PV);1555;126;1130;92
+2012;Limburg (PV);990;178;710;128
+2013;Nederland;10395;125;7125;86
+2013;Groningen (PV);785;270;565;194
+2013;Friesland (PV);220;69;170;52
+2013;Drenthe (PV);375;154;260;108
+2013;Overijssel (PV);585;103;400;71
+2013;Flevoland (PV);100;51;75;38
+2013;Gelderland (PV);680;68;425;43
+2013;Utrecht (PV);525;86;415;68
+2013;Noord-Holland (PV);3015;224;1865;139
+2013;Zuid-Holland (PV);1490;84;1090;62
+2013;Zeeland (PV);175;92;115;60
+2013;Noord-Brabant (PV);1500;121;1100;89
+2013;Limburg (PV);950;171;645;116
+2014;Nederland;8600;103;6320;76
+2014;Groningen (PV);910;313;600;207
+2014;Friesland (PV);175;54;155;48
+2014;Drenthe (PV);455;188;300;125
+2014;Overijssel (PV);425;74;305;53
+2014;Flevoland (PV);65;31;35;18
+2014;Gelderland (PV);550;55;410;41
+2014;Utrecht (PV);385;63;290;47
+2014;Noord-Holland (PV);2230;165;1630;120
+2014;Zuid-Holland (PV);1200;68;950;54
+2014;Zeeland (PV);165;87;115;61
+2014;Noord-Brabant (PV);1220;98;930;75
+2014;Limburg (PV);820;148;590;106
+2015*;Nederland;7110;85;5310;63
+2015*;Groningen (PV);950;327;705;242
+2015*;Friesland (PV);55;17;45;14
+2015*;Drenthe (PV);415;170;320;132
+2015*;Overijssel (PV);320;56;250;44
+2015*;Flevoland (PV);60;30;45;22
+2015*;Gelderland (PV);395;39;275;27
+2015*;Utrecht (PV);350;56;260;42
+2015*;Noord-Holland (PV);1740;128;1350;99
+2015*;Zuid-Holland (PV);1090;61;795;45
+2015*;Zeeland (PV);75;39;70;36
+2015*;Noord-Brabant (PV);985;79;730;59
+2015*;Limburg (PV);670;121;465;84
+2016*;Nederland;5790;69;4420;52
+2016*;Groningen (PV);580;199;575;197
+2016*;Friesland (PV);30;9;25;7
+2016*;Drenthe (PV);340;140;275;113
+2016*;Overijssel (PV);260;45;180;31
+2016*;Flevoland (PV);55;28;40;19
+2016*;Gelderland (PV);455;45;345;34
+2016*;Utrecht (PV);285;45;180;29
+2016*;Noord-Holland (PV);1300;94;935;68
+2016*;Zuid-Holland (PV);1085;60;800;45
+2016*;Zeeland (PV);15;8;15;8
+2016*;Noord-Brabant (PV);885;71;665;53
+2016*;Limburg (PV);500;90;385;70
+Bron: CBS;;;;;

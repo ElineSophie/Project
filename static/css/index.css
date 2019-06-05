@@ -4,7 +4,7 @@ body, html {
 }
 
 .bg-img {
-  background-image: url("../../images/brain.jpg");
+  background-image: url("../img/brain.jpg");
   min-height: 1000px;
   opacity: 1.0;
   background-position: center;
