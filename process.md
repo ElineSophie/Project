@@ -27,3 +27,11 @@ __07-06-2019__
 Today I collected all data in a csv file. In addition, I started to write a code to write this to a json file (not finished). Looking up all data took a very long time.
 
 What my purpose of the data is that I make all years as a key, ending in a nested dictionary for all years.
+
+__11-06-2019__
+---
+Vandaag ben ik bezig geweest om van mijn data (CSV bestand) een json file te maken. Dit bleek toch wel moeilijker te zijn dan verwacht. Wat ik graag met mijn CSV file wil, is dat ik de jaren als key gebruik en er een nested dictionary uit krijg. Daarbij moet er dan per provincie data zijn.
+
+Om toch verder te kunneng aan met mijn eindproject, heb ik voor de html pagina types data gezocht (en gevonden). Daarnaast heb ik deze data omgezet naar een json file en ben ik begonnen met het visualiseren van een pie chart.
+
+De problemen die ik hierbij tegen kwam was het inladen van de data naar de pie chart, waarbij er op internet veel voorbeelden staan van versie 3 of 4 d3. 
