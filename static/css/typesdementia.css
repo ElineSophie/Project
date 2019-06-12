@@ -1,0 +1,21 @@
+body{
+  position: absolute;
+  width: 100%;
+}
+
+
+.piechart {
+  position: absolute;
+  border: 1px solid red;
+  left: 0;
+  width: 50%;
+  height: 1000px;
+}
+
+.boxed {
+  position: absolute;
+  border: 1px solid green ;
+  right: 0;
+  width: 50%;
+  height: 1000px;
+}

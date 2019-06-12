@@ -1,6 +1,21 @@
-window.onload = function(){
-  datamaps()
-}
+window.onload = function loadData(){
+  datamaps();
+
+  d3v5.json("../../data/netherlands/datanetherlands.json").then(data => {
+    console.log(data);
+
+    // Remove netherlands in dataset
+    for (d in data){
+        data[d].shift();
+      };
+
+    scatterplot(data["2012"]);
+    document.getElementById("year").onchange = function(){
+      var year = this.value
+    scatterplot(data[year])
+  }
+  });
+};
 
 function datamaps(){
   var w = 550;
@@ -54,3 +69,65 @@ function datamaps(){
           });
   });
 }
+
+function scatterplot(data){
+
+  // Remove any previous graphs
+  d3v5.selectAll("#scatterplot")
+    .remove();
+
+  //Width and height
+  var w = 500;
+  var h = 500;
+
+  // Create svg
+  var svg_scatterplot = d3v5.select("body")
+                          .append("svg")
+                          .attr("width", w)
+                          .attr("height", h);
+
+  // Create margins and dimensions for the graph
+  var margin = {top: 40, right: 40, bottom: 120, left: 90};
+  var graphWidth = w - margin.left - margin.right;
+  var graphHeight = h - margin.top - margin.bottom
+
+  // Append a group to svg and save as graph
+  var graph = svg_scatterplot.append('g')
+                .attr("width", graphWidth)
+                .attr("height", graphHeight)
+                .attr('transform', `translate(${margin.left}, ${margin.top})`);
+
+  // Create groups for x and y
+  var xAxis = graph.append('g')
+                    .attr('transform', `translate(0, ${graphHeight})`);
+
+  var yAxis = graph.append('g');
+
+  // Set scales x and y and padding if necessary
+  var yScale = d3v5.scaleLinear()
+                .domain([d3v5.min(data, d => d["65+ totaal"]), d3v5.max(data, d => d["65+ totaal"])])
+                .range([graphHeight, 0])
+                .nice();
+
+  var xScale = d3v5.scaleLinear()
+                .domain([d3v5.min(data, d => d["Totaal aantal lopend"]), d3v5.max(data, d => d["Totaal aantal lopend"])])
+                .range([0, graphWidth])
+                .nice();
+
+  // Create circles
+  var dot = graph.selectAll("circle")
+                  .data(data);
+
+  dot.enter()
+      .append("circle")
+      .attr("r", "5")
+      .attr("cx", d => xScale(d["Totaal aantal lopend"]))
+      .attr("cy", d => yScale(d["65+ totaal"]));
+
+    // Create and call the axes
+    var x = d3v5.axisBottom(xScale);
+    var y = d3v5.axisLeft(yScale);
+
+    xAxis.call(x);
+    yAxis.call(y);
+  };
