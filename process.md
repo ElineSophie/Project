@@ -43,4 +43,15 @@ Daarbij heb ik met deze data een scatterplot gemaakt met op de y-as de vergrijzi
 
 Al deze dropdown menus moeten werken voor alle visualisaties tegelijk. Voor de jaren wil ik liever een balk waar je mee kunt slepen maken ipv een dropdown menu.
 
-Probleem: de scatterplot update helaas niet goed, maar krijg voor elk jaar nieuwe scatterplots onder elkaar. Het probleem kan ik zelf nu niet vinden, want ik verwijder de svg steeds bij het aanroepen van mijn functie. 
+Probleem: de scatterplot update helaas niet goed, maar krijg voor elk jaar nieuwe scatterplots onder elkaar. Het probleem kan ik zelf nu niet vinden, want ik verwijder de svg steeds bij het aanroepen van mijn functie.
+
+__13-06-2019__
+---
+De keuze tussen de jaren update nu de scatterplot met specifieke punten. Echter zijn deze punten nu nog wel gehardcoded.
+
+Voor morgen en volgende week is mijn doel dat ik de data uit de json file nu omzet voor de map, waarbij ik een nieuw object moet aanmaken met de provincies als key. Deze moet ik dan koppelen aan mijn datamaps en linken aan de dropdown. De dropdown moet dan werken voor zowel mijn maps en scatterplot. Als dit allemaal is gelukt, moet ik nieuwe dropdown/keuze menus maken, waarbij de gebruiker ook kan kiezen tussen:
+- Totaal DBC/lopende DBC/gesloten DBC.
+- Totaal man en vrouw/vrouwen/mannen
+- 65+ of 80+ (alleen voor de scatterplot)
+
+Voor het weekend is de planning dat ik mijn website layout ga veranderen door middel van bootstrap en grid layouts. 
