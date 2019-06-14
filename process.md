@@ -54,4 +54,12 @@ Voor morgen en volgende week is mijn doel dat ik de data uit de json file nu omz
 - Totaal man en vrouw/vrouwen/mannen
 - 65+ of 80+ (alleen voor de scatterplot)
 
-Voor het weekend is de planning dat ik mijn website layout ga veranderen door middel van bootstrap en grid layouts. 
+Voor het weekend is de planning dat ik mijn website layout ga veranderen door middel van bootstrap en grid layouts.
+
+__14-06-2019__
+---
+De map heeft nu een mousover functie, waarbij er nu momenteel de naam van de provincie wordt getoont. Om dit te krijgen heb ik een nieuwe json file aangemaakt, waarbij de key de namen van de provincies zijn. Wat ik nu moet doen is dat ik de data aan het menu worden gekoppeld, zodat ik de data van mijn map.json kan koppelen aan de gevisualiseerde map (dit ga ik maandag vragen).
+
+Mijn doel voor dit weekend is om mijn site al zo mooi mogelijk te maken. Ik denk dat dit nu de beste keuze is, omdat ik nu met heel veel vragen over mijn dataset zit. Voor de types site voor dementia, wil ik mijn pie chart afmaken, die dan wel gelinked is aan een bar chart. Dit is niet mijn hoofdvisualisatiepagina, maar maakt wel mijn website mooi.
+
+Voor het mooi maken van mijn website zal ik gebruik maken van bootstrap. 
