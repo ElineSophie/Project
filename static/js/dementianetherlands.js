@@ -15,7 +15,8 @@ window.onload = function loadData(){
 //     datamaps(data);
 // });
 
-  d3v5.json("../../data/netherlands/datanetherlands.json", updateYear).then(data => {
+  d3v5.json("../../data/netherlands/datanetherlands.json").then(data => {
+    // totalDropdown(data);
     globaldata.push(data);
 
     // Remove netherlands in dataset
@@ -40,6 +41,20 @@ window.onload = function loadData(){
 // function parseData(){
 //
 // }
+
+function totalDropdown(data){
+
+  keys = Object.keys(data)
+  man = []
+  keys.forEach(function(key){
+    data[key].forEach(function(value){
+        man[value["Perioden"]].push({
+        "Totaal gesloten mannen": value["Totaal aantal mannen gesloten"]
+      })
+    })
+});
+console.log(man);
+};
 
 function dataMaps(nld, data){
   console.log(data);
@@ -134,17 +149,17 @@ var tooltip = d3v5.select("body").append("div")
       //     .text("this is text");
 }
 
-function updateYear(d){
-  d["2009"] = d["2009"];
-  d["2010"] = d["2010"];
-  d["2011"] = d["2011"];
-  d["2012"] = d["2012"];
-  d["2013"] = d["2013"];
-  d["2014"] = d["2014"];
-  d["2015"] = d["2015"];
-
-  return d;
-};
+// function updateYear(d){
+//   d["2009"] = d["2009"];
+//   d["2010"] = d["2010"];
+//   d["2011"] = d["2011"];
+//   d["2012"] = d["2012"];
+//   d["2013"] = d["2013"];
+//   d["2014"] = d["2014"];
+//   d["2015"] = d["2015"];
+//
+//   return d;
+// };
 
 function initScatter(data){
 
@@ -272,7 +287,3 @@ dot.transition().attr("cx", function(d) {console.log(xScale(d["Totaal aantal lop
     yAxis.call(y);
 
   };
-
-function sunburst(){
-
-}

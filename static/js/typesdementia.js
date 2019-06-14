@@ -6,27 +6,31 @@ window.onload = function loadData(){
 
 function piechart(data){
   keys = Object.keys(data);
-  console.log(keys)
+
   values = Object.values(data);
 
-  console.log(values);
+  // Make list for prevalence rates
+  prevalence = [];
+  values.forEach(function(d){
+    pre = d.Prevalence;
+    prevalence.push(pre)
+  })
+
+
   var width = 450;
   var height = 450;
   var margin = 40;
 
   var dict = {};
-  for (i=0; i<keys.length; i++){
-    dict[keys[i]] = values[i]
+  for (i=0; i < keys.length; i++){
+    dict[String(keys[i])] = prevalence[i];
   };
 
-  console.log(dict);
-
-  console.log(data);
   var radius = Math.min(width, height) / 2 - margin
 
   // console.log(data.Type);
 
-  var svg = d3.select("#piechart")
+  var svg = d3.select(".piechart")
               .append("svg")
               .attr("width", width)
               .attr("height", height)
@@ -35,20 +39,33 @@ function piechart(data){
 
   // Set the color scale
     var color = d3.scaleOrdinal()
-                .domain(keys.length)
-                .range(d3.schemeSet2);
+                .domain(values.length)
+                .range(d3.schemePaired);
 
     // Compute the position of each group on the pie
     var pie = d3.pie()
-                .value(d => d.Prevalence
+                .value(d => d.value);
 
     // var data_ready = pie(d3.entries(data.Type))
     // var data_ready1 = pie(d3.entries(keys))
 
+    var data_ready = pie(d3.entries(dict))
+
     // Shape helper to build arcs
     var arcGenerator = d3.arc()
-                        .innerRadius(0)
-                        .outerRadius(radius);
+                        .innerRadius(radius * 0.4)
+                        .outerRadius(radius * 0.8);
+
+    // Initiate tooltip
+    var tooltip = d3.tip()
+                  .attr("class", "d3-tip")
+                  .html(function(d) {
+                    key = d.data.key
+                    value = d.data.value
+                    return key + ": " + value;
+                  });
+
+    svg.call(tooltip);
 
     // Create the pie chart
     svg.selectAll("path")
@@ -56,13 +73,15 @@ function piechart(data){
         .enter()
         .append("path")
           .attr("d", d3.arc()
-                      .innerRadius(100)
+                      .innerRadius(0)
                       .outerRadius(radius)
             )
-          .attr("fill", function(d) { return(color(d.data.key)) })
+          .attr("fill", function(d) { return(color(d.data.value)) })
           .attr("stroke", "black")
         .style("stroke-width", "2px")
-        .style("opacity", 0,7);
+        .style("opacity", 0,7)
+        .on("mouseover", tooltip.show)
+        .one("mouseout", tooltip.hide);
 
 
 

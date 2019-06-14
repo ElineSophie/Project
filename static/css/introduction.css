@@ -39,16 +39,3 @@ padding: 15px;
 }
 .row.content {height:auto;}
 }
-
-.tooltip{
-  background-color: "red";
-  border: 2px solid black;
-}
-
-#map {
-	position:absolute;
-  background-color: white;
-  border: 1px solid;
-  padding: 10px;
-  box-shadow: 5px 10px 18px #888888;
-}

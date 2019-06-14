@@ -62,4 +62,6 @@ De map heeft nu een mousover functie, waarbij er nu momenteel de naam van de pro
 
 Mijn doel voor dit weekend is om mijn site al zo mooi mogelijk te maken. Ik denk dat dit nu de beste keuze is, omdat ik nu met heel veel vragen over mijn dataset zit. Voor de types site voor dementia, wil ik mijn pie chart afmaken, die dan wel gelinked is aan een bar chart. Dit is niet mijn hoofdvisualisatiepagina, maar maakt wel mijn website mooi.
 
-Voor het mooi maken van mijn website zal ik gebruik maken van bootstrap. 
+Voor het mooi maken van mijn website zal ik gebruik maken van bootstrap.
+
+In de avonduren heb ik mijn website nog aangepast en een piechart voor mijn typesdementia pagina gemaakt. Op Alzheimerworldwide heb ik nog data gevonden over de prognose wereldwijd (2050), die ik wil gebruiken voor mijn introductie pagina. 
