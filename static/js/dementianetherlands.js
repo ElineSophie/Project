@@ -60,8 +60,8 @@ function dataMaps(nld, data){
   console.log(data);
   console.log(nld);
 
-  var w = 550;
-  var h = 550;
+  var w = 450;
+  var h = 450;
 
   var colour = d3v3.scale.category20();
 
@@ -168,7 +168,7 @@ function initScatter(data){
   var h = 500;
 
   // Create svg
-  var svg_scatterplot = d3v5.select("body")
+  var svg_scatterplot = d3v5.select(".scatterplot")
                           .append("svg")
                           .attr("class", "scatterplot")
                           .attr("width", w)
@@ -276,8 +276,10 @@ function updateScatter(data = globaldata[0]){
   //     .attr("cx", function(d) {console.log(xScale(d["Totaal aantal lopend"]));return xScale(d["Totaal aantal lopend"])})
   //     .attr("cy", d => yScale(d["65+ totaal"]));
 
-dot.transition().attr("cx", function(d) {console.log(xScale(d["Totaal aantal lopend"]));return xScale(d["Totaal aantal lopend"])})
-.attr("cy", d => yScale(d["65+ totaal"]));
+dot.transition()
+    .attr("cx", function(d) {
+      return xScale(d["Totaal aantal lopend"])})
+    .attr("cy", d => yScale(d["65+ totaal"]));
 
     // Create and call the axes
     var x = d3v5.axisBottom(xScale);

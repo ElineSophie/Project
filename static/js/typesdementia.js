@@ -1,6 +1,7 @@
 window.onload = function loadData(){
   d3.json("../../data/types/types.json").then(data => {
     piechart(data);
+    // barChart(data);
   });
 };
 
@@ -81,35 +82,90 @@ function piechart(data){
         .style("stroke-width", "2px")
         .style("opacity", 0,7)
         .on("mouseover", tooltip.show)
-        .one("mouseout", tooltip.hide);
-
-
-
-
- // var color = d3.scaleOrdinal(["red","orange","black",
- //       "green","yellow","pink", "blue", "lightblue"]);
-
-  // var pie = d3.pie()
-  //             .value(d => d.Prevalence);
-  //
-  // var data_ready = pie(d3.entries(data));
-
-  // svg
-  //   .selectAll('svg')
-  //   .data(data_ready)
-  //   .enter()
-  //   .append('path')
-  //   .attr('d', d3.arc()
-  //     .innerRadius(0)
-  //     .outerRadius(radius)
-  //   )
-  //   .attr('fill', function(d){ return(color(d.data.key)) })
-  //   .attr("stroke", "black")
-  //   .style("stroke-width", "2px")
-  //   .style("opacity", 0.7);
-
-  // var arc = d3.arc()
-  //             .innerRadius(0)
-  //             .outerRadius(radius);
-
-}
+        .on("mouseout", tooltip.hide);
+};
+// function barChart(data){
+//   // Remove any previous graphs
+//     d3.selectAll("rect")
+//         .remove();
+//
+//     var w = 400;
+//     var h = 350;
+//
+//     // Getting DOM element
+//     var svg = d3.select("body")
+//                    .attr("width", w)
+//                    .attr("height", h);
+//
+//
+//     // Create margins and dimensions for the graph
+//     var margin = {top: 20, right: 20, bottom: 80, left: 80};
+//     var graphWidth = w - margin.left - margin.right;
+//     var graphHeight = h - margin.top - margin.bottom;
+//
+//     // Append a group to svg and save as graph
+//     var graph = svg.append('g')
+//                   .attr("width", graphWidth)
+//                   .attr("height", graphHeight)
+//                   .attr('transform', `translate(${margin.left}, ${margin.top})`);
+//
+//     // Create groups for x and y
+//     var xAxis = graph.append('g')
+//       .attr('transform', `translate(0, ${graphHeight})`);
+//
+//     var yAxis = graph.append('g');
+//
+//     // Set scales for axis
+//     var yScale = d3.scaleLinear()
+//                     .domain([0, 100])
+//                     .range([graphHeight, 0]);
+//
+//     var list = ["Female", "Male"];
+//
+//     var xScale = d3.scaleBand()
+//                         .domain(list)
+//                         .range([0, graphWidth])
+//                         .paddingInner(0.3)
+//                         .paddingOuter(0.3);
+//
+//     // Join the data to the rectangles
+//     var rect = graph.selectAll("rect")
+//                     .data([female, male]);
+//
+//     // Add attributes to the rectangles
+//     rect.enter()
+//         .append("rect")
+//         .attr("width", xScale.bandwidth)
+//         .attr("height", d => graphHeight - yScale(d))
+//         .attr("fill", "blue")
+//         .attr("x", (d, i) => xScale(list[i]))
+//         .attr("y", d => yScale(d));
+//
+//
+//     // Create and call the axes
+//     var x = d3.axisBottom(xScale);
+//     var y = d3.axisLeft(yScale)
+//               .ticks(5);
+//
+//     xAxis.call(x);
+//     yAxis.call(y);
+//
+//     // Append text to the graph
+//     svg.append("text")
+//         .attr("x", (-h / 2.2))
+//         .attr("y", 50)
+//         .attr("transform", "rotate(-90)")
+//         .attr("text-anchor", "middle")
+//         .style("font-size", "12px")
+//         .style("font-family", "sans-serif")
+//         .text("Average Life Expectancy");
+//
+//     svg.append("text")
+//         .attr("x", w / 1.8)
+//         .attr('y', 320)
+//         .attr('text-anchor', 'middle')
+//         .style("font-size", "12px")
+//         .style("font-family", "sans-serif")
+//         .text("Country vs. Global rate");
+//
+// };

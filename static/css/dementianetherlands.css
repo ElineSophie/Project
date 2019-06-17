@@ -46,7 +46,19 @@ padding: 15px;
 }
 
 #map {
-	position:absolute;
+  position: relative;
+ top: 20px;
+ left: 20px;
+  background-color: white;
+  border: 1px solid;
+  padding: 10px;
+  box-shadow: 5px 5px 5px #888888;
+}
+
+.scatterplot {
+  position: absolute;
+  bottom: 50px;
+  right: -100px;
   background-color: white;
   border: 1px solid;
   padding: 10px;
