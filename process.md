@@ -64,4 +64,15 @@ Mijn doel voor dit weekend is om mijn site al zo mooi mogelijk te maken. Ik denk
 
 Voor het mooi maken van mijn website zal ik gebruik maken van bootstrap.
 
-In de avonduren heb ik mijn website nog aangepast en een piechart voor mijn typesdementia pagina gemaakt. Op Alzheimerworldwide heb ik nog data gevonden over de prognose wereldwijd (2050), die ik wil gebruiken voor mijn introductie pagina. 
+In de avonduren heb ik mijn website nog aangepast en een piechart voor mijn typesdementia pagina gemaakt. Op Alzheimerworldwide heb ik nog data gevonden over de prognose wereldwijd (2050), die ik wil gebruiken voor mijn introductie pagina.
+
+__17/18-06-2019__
+---
+Zowel gisteren als vandaag heb ik geprobeerd om de data te verbinden met een dropdown menu en ook met radio buttons. Dit is helaas nog niet gelukt. Waar ik tegen aan loop is dat ik twee verschillende datasets heb, waarbij ik voor de map als voor de scatterplot apart de data moet doorzoeken naar de waarden. Ik kan daarbij de .on functie niet voor twee verschillende functies gebruiken.
+
+Wat ik wel heb gedaan is twee lijngrafieken getekend, voor op de introductiepagina en op de dementianetherlands pagina. Deze grafiek is naar mijn mening goed gelukt. Wat mijn doel is voor de lijngrafiek op dementianetherlands, is dat deze een transition functie heeft. Als default zou ik graag de lijn voor Nederland als totaal willen hebben. Zodra er dan geklikt wordt op een provincie in de map, wordt de lijngrafiek geupdate naar de prognose voor de aangeklikte provincie (dit is de planning voor morgen).
+
+Mijn doelen voor de aankomende dagen:
+- De data verbinden aan de keuzes en daarbij dus aan de grafieken.
+- De data bij elke klik updaten.
+- De svg's op de goede plek zetten. 

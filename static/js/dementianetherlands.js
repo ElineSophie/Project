@@ -3,62 +3,54 @@ var globaldata = []
 window.onload = function loadData(){
 
       // Load in data
-    var requests = [d3v5.json("../../data/netherlands/nld.json"), d3v5.json("../../data/netherlands/map.json")];
+    var requests = [d3v5.json("../../data/netherlands/nld.json"), d3v5.json("../../data/netherlands/map.json"), d3v5.json("../../data/netherlands/datanetherlands.json"), d3v5.json("../../data/netherlands/prognose.json")];
     Promise.all(requests).then(function(res) {
         dataMaps(res[0], res[1])
+
+        globaldata.push(res[2]);
+        globaldata.push(res[1]);
+        updateMap();
+
+        // Remove netherlands in dataset
+        for (d in res[2]){
+            res[2][d].shift();
+          };
+
+        initScatter(res[2]["2009"]);
+
+        d3v5.select("#year")
+            .on("change", function(d){
+              // console.log();
+              updateScatter(this.value);
+              updateMap(this.value);
+            });
+              // updateMap();
+            // });
+
+        prognoseLine(res[3]);
+
 
     }).catch(function(e){
         throw(e);
         });
 
-//   d3v5.json("../../data/netherlands/map.json").then(data => {
-//     datamaps(data);
+};
+
+// function totalDropdown(data){
+//
+//   keys = Object.keys(data)
+//   man = []
+//   keys.forEach(function(key){
+//     data[key].forEach(function(value){
+//         man[value["Perioden"]].push({
+//         "Totaal gesloten mannen": value["Totaal aantal mannen gesloten"]
+//       })
+//     })
 // });
-
-  d3v5.json("../../data/netherlands/datanetherlands.json").then(data => {
-    // totalDropdown(data);
-    globaldata.push(data);
-
-    // Remove netherlands in dataset
-    for (d in data){
-        data[d].shift();
-      };
-
-    initScatter(data["2009"]);
-
-    d3v5.select("#year")
-        .on("change", updateScatter);
-
-  });
-
-};
-
-// function formatDataMap(data){
-//   // # maak leeg object aan en vul deze met de data.
-//
-// }
-//
-// function parseData(){
-//
-// }
-
-function totalDropdown(data){
-
-  keys = Object.keys(data)
-  man = []
-  keys.forEach(function(key){
-    data[key].forEach(function(value){
-        man[value["Perioden"]].push({
-        "Totaal gesloten mannen": value["Totaal aantal mannen gesloten"]
-      })
-    })
-});
-console.log(man);
-};
+// console.log(man);
+// };
 
 function dataMaps(nld, data){
-  console.log(data);
-  console.log(nld);
 
   var w = 450;
   var h = 450;
@@ -104,7 +96,6 @@ var tooltip = d3v5.select("body").append("div")
   projection
       .scale(s)
       .translate(t);
-  console.log(l);
 
   // Make a path for every province
   graph.selectAll(".path")
@@ -121,7 +112,16 @@ var tooltip = d3v5.select("body").append("div")
             tooltip.transition()
             .duration(200)
             .style("opacity", .9);
-            tooltip.html(d.properties.name)
+            tooltip.html(function(){
+              point = undefined
+              data[d.properties.name].forEach(period=>{
+                if (period.Perioden == 2009) {
+                   point = period
+                   return;
+                }})
+              // hier kan je de variabele printen die je wilt hebben
+              return point["80+ totaal"]
+            })
             .style("left", (d3v5.event.pageX) + "px")
             .style("top", (d3v5.event.pageY - 28) + "px");
 
@@ -149,17 +149,24 @@ var tooltip = d3v5.select("body").append("div")
       //     .text("this is text");
 }
 
-// function updateYear(d){
-//   d["2009"] = d["2009"];
-//   d["2010"] = d["2010"];
-//   d["2011"] = d["2011"];
-//   d["2012"] = d["2012"];
-//   d["2013"] = d["2013"];
-//   d["2014"] = d["2014"];
-//   d["2015"] = d["2015"];
-//
-//   return d;
-// };
+function updateMap(d){
+
+//   keys = Object.keys(globaldata[1]);
+//   console.log(keys);
+//   keys.forEach(function(key){
+//     Object.values(globaldata[1]).forEach(function(d){
+//         var val = d[key]["Perioden"];
+//         console.log(val);
+//   })
+// })
+  data1 = globaldata[1]
+  Object.keys(data1).forEach(function(key){
+    data1[key].forEach(function(value){
+      console.log(value);
+    })});
+
+
+};
 
 function initScatter(data){
 
@@ -168,7 +175,7 @@ function initScatter(data){
   var h = 500;
 
   // Create svg
-  var svg_scatterplot = d3v5.select(".scatterplot")
+  var svg_scatterplot = d3v5.select(".scatter")
                           .append("svg")
                           .attr("class", "scatterplot")
                           .attr("width", w)
@@ -230,10 +237,7 @@ function initScatter(data){
 
 };
 
-function updateScatter(data = globaldata[0]){
-  var val = this.value;
-  // console.log(val);
-  // console.log("hoi");
+function updateScatter(val, data = globaldata[0]){
 
   var graph = d3v5.selectAll(".svg_scatter");
   // console.log(graph);
@@ -276,7 +280,7 @@ function updateScatter(data = globaldata[0]){
   //     .attr("cx", function(d) {console.log(xScale(d["Totaal aantal lopend"]));return xScale(d["Totaal aantal lopend"])})
   //     .attr("cy", d => yScale(d["65+ totaal"]));
 
-dot.transition()
+  dot.transition()
     .attr("cx", function(d) {
       return xScale(d["Totaal aantal lopend"])})
     .attr("cy", d => yScale(d["65+ totaal"]));
@@ -289,3 +293,153 @@ dot.transition()
     yAxis.call(y);
 
   };
+
+function prognoseLine(data){
+  var width = 500;
+  var height = 300;
+  var margin = 50;
+  var duration = 250;
+
+  var lineOpacity = "0.25";
+  var lineOpacityHover = "0.85";
+  var otherLinesOpacityHover = "0.1";
+  var lineStroke = "1.5px";
+  var lineStrokeHover = "2.5px";
+
+  var circleOpacity = '0.85';
+  var circleOpacityOnLineHover = "0.25"
+  var circleRadius = 3;
+  var circleRadiusHover = 6;
+
+  /* Scale */
+  var xScale = d3v5.scaleLinear()
+    .domain(d3v5.extent(data[2].values, d => d.x))
+    .range([0, width-margin]);
+
+  var yScale = d3v5.scaleLinear()
+    .domain([0, d3v5.max(data[8].values, d => d.y)])
+    .range([height-margin, 0]);
+
+  var color = d3v5.scaleOrdinal(d3v5.schemeCategory10);
+
+  /* Add SVG */
+  var svg = d3v5.select(".prognose").append("svg")
+    .attr("width", (width+margin)+"px")
+    .attr("height", (height+margin)+"px")
+    .append('g')
+    .attr("transform", `translate(${margin}, ${margin})`);
+
+
+  /* Add line into SVG */
+  var line = d3v5.line()
+    .x(d => xScale(d.x))
+    .y(d => yScale(d.y));
+
+  var lines = svg.append('g')
+    .attr('class', 'lines');
+
+  lines.selectAll('.lines')
+    .data(data).enter()
+    .append('g')
+    .attr('class', 'line-group')
+    .on("mouseover", function(d, i) {
+        svg.append("text")
+          .attr("class", "title-text")
+          .style("fill", color(i))
+          .text(d.name)
+          .attr("text-anchor", "middle")
+          .attr("x", (width-margin)/2)
+          .attr("y", 5);
+      })
+    .on("mouseout", function(d) {
+        svg.select(".title-text").remove();
+      })
+    .append('path')
+    .attr('class', 'line')
+    .attr('d', d => line(d.values))
+    .style('stroke', (d, i) => color(i))
+    .style('opacity', lineOpacity)
+    .on("mouseover", function(d) {
+        d3v5.selectAll('.line')
+            .style('opacity', otherLinesOpacityHover);
+        d3v5.selectAll('.circle')
+            .style('opacity', circleOpacityOnLineHover);
+        d3v5.select(this)
+          .style('opacity', lineOpacityHover)
+          .style("stroke-width", lineStrokeHover)
+          .style("cursor", "pointer");
+      })
+    .on("mouseout", function(d) {
+        d3v5.selectAll(".line")
+            .style('opacity', lineOpacity);
+        d3v5.selectAll('.circle')
+            .style('opacity', circleOpacity);
+        d3v5.select(this)
+          .style("stroke-width", lineStroke)
+          .style("cursor", "none");
+      });
+
+
+  /* Add circles in the line */
+  lines.selectAll("circle-group")
+    .data(data).enter()
+    .append("g")
+    .style("fill", (d, i) => color(i))
+    .selectAll("circle")
+    .data(d => d.values).enter()
+    .append("g")
+    .attr("class", "circle")
+    .on("mouseover", function(d) {
+        d3v5.select(this)
+          .style("cursor", "pointer")
+          .append("text")
+          .attr("class", "text")
+          .text(`${d.y}`)
+          .attr("x", d => xScale(d.x) + 5)
+          .attr("y", d => yScale(d.y) - 10);
+      })
+    .on("mouseout", function(d) {
+        d3v5.select(this)
+          .style("cursor", "none")
+          .transition()
+          .duration(duration)
+          .selectAll(".text").remove();
+      })
+    .append("circle")
+    .attr("cx", d => xScale(d.x))
+    .attr("cy", d => yScale(d.y))
+    .attr("r", circleRadius)
+    .style('opacity', circleOpacity)
+    .on("mouseover", function(d) {
+          d3v5.select(this)
+            .transition()
+            .duration(duration)
+            .attr("r", circleRadiusHover);
+        })
+      .on("mouseout", function(d) {
+          d3v5.select(this)
+            .transition()
+            .duration(duration)
+            .attr("r", circleRadius);
+        });
+
+
+  /* Add Axis into SVG */
+  var xAxis = d3v5.axisBottom(xScale).ticks(5);
+  var yAxis = d3v5.axisLeft(yScale).ticks(5);
+
+  svg.append("g")
+    .attr("class", "x axis")
+    .attr("transform", `translate(0, ${height-margin})`)
+    .call(xAxis);
+
+  svg.append("g")
+    .attr("class", "y axis")
+    .call(yAxis)
+    .append('text')
+    .attr("y", 15)
+    .attr("transform", "rotate(-90)")
+    .attr("fill", "#000")
+    .text("Total values");
+
+};
