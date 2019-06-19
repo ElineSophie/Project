@@ -28,7 +28,7 @@ def convertion(infile, outfile):
     for index, row in df.iterrows():
         bestaat_al = False
         for el in lege_lijst:
-            if el["name"] == row.Provincie:
+            if el["name"] == row.Naam:
                 bestaat_al = True
         if bestaat_al:
             # Toevoegen aan values
@@ -37,7 +37,7 @@ def convertion(infile, outfile):
         else:
             # maak values aan en voeg x en y toe
             json_doc = {}
-            json_doc["name"] = row['Provincie']
+            json_doc["name"] = row['Naam']
             json_doc["values"] = []
             json_doc["values"].append(row.to_dict())
 

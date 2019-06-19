@@ -1,4 +1,4 @@
-﻿Provincie;x;y
+﻿Naam;x;y
 Groningen;2018;9300
 Groningen;2020;9700
 Groningen;2025;11000
@@ -83,3 +83,10 @@ Limburg;2030;30000
 Limburg;2034;34000
 Limburg;2040;38000
 Limburg;2050;43000
+Nederland;2018;270000
+Nederland;2020;280000
+Nederland;2025;330000
+Nederland;2030;390000
+Nederland;2034;460000
+Nederland;2040;520000
+Nederland;2050;620000

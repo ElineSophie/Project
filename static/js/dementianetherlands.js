@@ -1,15 +1,18 @@
 var globaldata = []
 
+var selected_year = 2009
+
 window.onload = function loadData(){
 
       // Load in data
     var requests = [d3v5.json("../../data/netherlands/nld.json"), d3v5.json("../../data/netherlands/map.json"), d3v5.json("../../data/netherlands/datanetherlands.json"), d3v5.json("../../data/netherlands/prognose.json")];
     Promise.all(requests).then(function(res) {
+
         dataMaps(res[0], res[1])
 
         globaldata.push(res[2]);
         globaldata.push(res[1]);
-        updateMap();
+        // updateMap();
 
         // Remove netherlands in dataset
         for (d in res[2]){
@@ -27,8 +30,8 @@ window.onload = function loadData(){
               // updateMap();
             // });
 
-        prognoseLine(res[3]);
-
+        prognoseLine(res[3][12]);
+        console.log(res[3][12]);
 
     }).catch(function(e){
         throw(e);
@@ -51,7 +54,7 @@ window.onload = function loadData(){
 // };
 
 function dataMaps(nld, data){
-
+  console.log(data);
   var w = 450;
   var h = 450;
 
@@ -115,7 +118,8 @@ var tooltip = d3v5.select("body").append("div")
             tooltip.html(function(){
               point = undefined
               data[d.properties.name].forEach(period=>{
-                if (period.Perioden == 2009) {
+                console.log(selected_year);
+                if (period.Perioden == selected_year) {
                    point = period
                    return;
                 }})
@@ -149,8 +153,8 @@ var tooltip = d3v5.select("body").append("div")
       //     .text("this is text");
 }
 
-function updateMap(d){
-
+function updateMap(val, d){
+  selected_year = val
 //   keys = Object.keys(globaldata[1]);
 //   console.log(keys);
 //   keys.forEach(function(key){
@@ -159,13 +163,11 @@ function updateMap(d){
 //         console.log(val);
 //   })
 // })
-  data1 = globaldata[1]
-  Object.keys(data1).forEach(function(key){
-    data1[key].forEach(function(value){
-      console.log(value);
-    })});
-
-
+  // data1 = globaldata[1]
+  // Object.keys(data1).forEach(function(key){
+  //   data1[key].forEach(function(value){
+  //     var val = value;
+  //   })});
 };
 
 function initScatter(data){
@@ -238,7 +240,7 @@ function initScatter(data){
 };
 
 function updateScatter(val, data = globaldata[0]){
-
+  console.log(val);
   var graph = d3v5.selectAll(".svg_scatter");
   // console.log(graph);
   var svg_scatterplot = d3v5.selectAll(".scatterplot");
@@ -295,6 +297,8 @@ function updateScatter(val, data = globaldata[0]){
   };
 
 function prognoseLine(data){
+
+  console.log(data.values);
   var width = 500;
   var height = 300;
   var margin = 50;
@@ -311,24 +315,25 @@ function prognoseLine(data){
   var circleRadius = 3;
   var circleRadiusHover = 6;
 
+  var values = Object.values(data)
+
   /* Scale */
   var xScale = d3v5.scaleLinear()
-    .domain(d3v5.extent(data[2].values, d => d.x))
+    .domain(d3v5.extent(data.values, d => d.x))
     .range([0, width-margin]);
 
   var yScale = d3v5.scaleLinear()
-    .domain([0, d3v5.max(data[8].values, d => d.y)])
+    .domain([0, d3v5.max(data.values, d => d.y)])
     .range([height-margin, 0]);
 
   var color = d3v5.scaleOrdinal(d3v5.schemeCategory10);
 
   /* Add SVG */
-  var svg = d3v5.select(".prognose").append("svg")
+  var svg = d3v5.select("body").append("svg")
     .attr("width", (width+margin)+"px")
     .attr("height", (height+margin)+"px")
     .append('g')
     .attr("transform", `translate(${margin}, ${margin})`);
-
 
   /* Add line into SVG */
   var line = d3v5.line()
@@ -336,7 +341,12 @@ function prognoseLine(data){
     .y(d => yScale(d.y));
 
   var lines = svg.append('g')
-    .attr('class', 'lines');
+                  .attr('class', 'lines');
+
+  // var values = Object.values(data);
+  // values.forEach(function(d){
+  //   console.log(d);
+  // });
 
   lines.selectAll('.lines')
     .data(data).enter()
@@ -379,6 +389,10 @@ function prognoseLine(data){
           .style("cursor", "none");
       });
 
+  console.log(Object.values(data));
+  Object.values(data).forEach(function(d){
+    console.log(d.x);
+  })
 
   /* Add circles in the line */
   lines.selectAll("circle-group")

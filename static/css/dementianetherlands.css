@@ -11,6 +11,55 @@ body{
   border-radius: 0;
 }
 
+* {box-sizing: border-box;}
+.wrapper {
+  max-width: 940px;
+  margin: 0 auto;
+}
+
+.wrapper > div {
+  border: 1px solid grey;
+  border-radius: 2px;
+  background-color:white;
+  padding: 1em;
+  color: #d9480f;
+}.wrapper {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+  grid-auto-rows: minmax(100px, auto);
+}
+.one {
+  grid-column: 2 / 4;
+  grid-row: 1;
+
+}
+.test{
+  grid-column:2/4;
+  grid-row:1;
+}
+.two {
+  grid-column: 2 / 3;
+  grid-row: 2 / 5;
+}
+.three {
+  grid-column: 1;
+  grid-row: 1 / 8;
+}
+.four {
+  grid-column: 3 / 3;
+  grid-row: 2 / 5;
+}
+.five {
+  grid-column: 2 / 3;
+  grid-row: 5 / 8;
+}
+.six {
+  grid-column: 3 / 3;
+  grid-row: 5 / 8;
+}
+
+
 /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
 .row.content {height: 100%;
 background-color: pink;
@@ -56,7 +105,7 @@ padding: 15px;
 
 .scatterplot {
   position: middle;
-  bottom: 50px;
+  /* bottom: 50px; */
   right: -200px;
   background-color: white;
   border: 1px solid;

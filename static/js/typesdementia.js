@@ -18,9 +18,9 @@ function piechart(data){
   })
 
 
-  var width = 450;
-  var height = 450;
-  var margin = 40;
+  var width = 300;
+  var height = 300;
+  var margin = 20;
 
   var dict = {};
   for (i=0; i < keys.length; i++){
