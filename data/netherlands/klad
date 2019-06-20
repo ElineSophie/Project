@@ -190,3 +190,33 @@ print(data)
         //     // var cat = document.getElementById("")
         //   updateScatter(data[year])
         // }
+
+Updatemap
+        //   keys = Object.keys(globaldata[1]);
+        //   console.log(keys);
+        //   keys.forEach(function(key){
+        //     Object.values(globaldata[1]).forEach(function(d){
+        //         var val = d[key]["Perioden"];
+        //         console.log(val);
+        //   })
+        // })
+          // data1 = globaldata[1]
+          // Object.keys(data1).forEach(function(key){
+          //   data1[key].forEach(function(value){
+          //     var val = value;
+          //   })});
+
+
+          // function totalDropdown(data){
+          //
+          //   keys = Object.keys(data)
+          //   man = []
+          //   keys.forEach(function(key){
+          //     data[key].forEach(function(value){
+          //         man[value["Perioden"]].push({
+          //         "Totaal gesloten mannen": value["Totaal aantal mannen gesloten"]
+          //       })
+          //     })
+          // });
+          // console.log(man);
+          // };

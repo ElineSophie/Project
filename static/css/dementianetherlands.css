@@ -13,7 +13,7 @@ body{
 
 * {box-sizing: border-box;}
 .wrapper {
-  max-width: 940px;
+  max-width: 100%;
   margin: 0 auto;
 }
 
@@ -29,22 +29,20 @@ body{
   grid-gap: 10px;
   grid-auto-rows: minmax(100px, auto);
 }
+}
 .one {
   grid-column: 2 / 4;
   grid-row: 1;
 
 }
-.test{
-  grid-column:2/4;
-  grid-row:1;
-}
+
 .two {
   grid-column: 2 / 3;
   grid-row: 2 / 5;
 }
 .three {
   grid-column: 1;
-  grid-row: 1 / 8;
+  grid-row: 1 / 5;
 }
 .four {
   grid-column: 3 / 3;
@@ -94,7 +92,30 @@ padding: 15px;
   border: 2px solid black;
 }
 
-#map {
+svg {
+    font-family: Sans-Serif, Arial;
+}
+.line {
+  stroke-width: 2;
+  fill: none;
+}
+
+.axis path {
+  stroke: black;
+}
+
+.text {
+  font-size: 12px;
+}
+
+.title-text {
+  font-size: 12px;
+}
+
+.show { display: block; }
+.hide { display: none; }
+
+/* #map {
   position: relative;
   left: 20px;
   background-color: white;
@@ -105,7 +126,7 @@ padding: 15px;
 
 .scatterplot {
   position: middle;
-  /* bottom: 50px; */
+  bottom: 50px;
   right: -200px;
   background-color: white;
   border: 1px solid;

@@ -75,4 +75,18 @@ Wat ik wel heb gedaan is twee lijngrafieken getekend, voor op de introductiepagi
 Mijn doelen voor de aankomende dagen:
 - De data verbinden aan de keuzes en daarbij dus aan de grafieken.
 - De data bij elke klik updaten.
-- De svg's op de goede plek zetten. 
+- De svg's op de goede plek zetten.
+
+__19-06-2019__
+---
+De svg's op de goede plek zitten is gelukt voor de pagina dementianetherlands. De dropdown voor de jaren is gekoppeld aan de map en aan de scatterplot.
+
+__20-06-2019__
+---
+De link tussen de map en de lijngrafiek op de dementianetherlands pagina is bijna gelukt. Er is nog wel wat verwarring welke class ik moet updaten. Eerst kreeg ik allemaal nieuwe grafieken onder elkaar, wat niet de bedoeling was. De fout zit ergens verstopt, maar denk dat als ik deze heb gevonden dat de linegrafiek wel gaat updaten.
+
+Om het updaten uit te proberen, ben ik nu begonnen om de lijngrafiek op de introductiepagina te veranderen door middel van een radiobutton. Dit is ook bijna gelukt. Ik ga hier nog mee oefenen om zo door te krijgen welke ik moet aanpassen.
+
+Daarnaast moest ik nogmaals mijn data veranderen vandaag, omdat ik ook een pie chart moet maken die update. Mijn plan was om dit ook voor zowel mannen als vrouwen te doen, waaronder ook totaal daarvan. Echter heb ik vandaag met Nigel overlegd dat dit helaas niet mogelijk is, naar aanleiding van mijn hoeveelheid aan data en de keuzes die de gebruiker kan maken op de website. Daarom heb ik na overleg besloten om de piechart te baseren op het totaal aantal gesloten/lopende DBC's en het totaal mannen en vrouwen. Met deze data ga ik een pie chart maken voor leeftijdscategorie verdeling, waarbij de default voor heel Nederland laat zien. Als er dan geklikt wordt op een provincie, is het de bedoeling dat de pie chart verandert.
+
+Mijn doel in het weekend is om de website en alle grafieken ook mooier te maken. 

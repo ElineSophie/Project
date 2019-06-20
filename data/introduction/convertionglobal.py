@@ -87,3 +87,4 @@ def convertion(infile, outfile):
 
 if __name__ == "__main__":
     convertion("globalprevalence.csv", "globalprevalence.json")
+    convertion("regionprevalence.csv", "regionprevalence.json")
