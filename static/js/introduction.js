@@ -12,8 +12,8 @@ window.onload = function loadData(){
     lineGraph(res[0]);
 
     d3.select("#option").on("click", function(d){
-      console.log(res[1]);
-      updateLineGraph(res[1]);
+      // console.log(res[1]);
+      updateLineGraph();
     });
     // updateLineGraph(res[1]);
     // console.log(res[1]);
@@ -59,6 +59,7 @@ function lineGraph(data){
     .attr("width", (width+margin)+"px")
     .attr("height", (height+margin)+"px")
     .append('g')
+    .attr("id", "lineGraphTest")
     .attr("transform", `translate(${margin}, ${margin})`);
 
 
@@ -175,8 +176,14 @@ function lineGraph(data){
     .text("Total values");
 
 };
-function updateLineGraph(data){
-  console.log(data);
+function updateLineGraph(){
+
+  console.log("safsaf");
+
+  // console.log(data);
+  d3.json("../../data/introduction/regionprevalence.json").then(function(data2){
+
+    console.log(data2);
 
   var width = 500;
   var height = 300;
@@ -197,37 +204,64 @@ function updateLineGraph(data){
   var color = d3.scaleOrdinal(d3.schemeCategory10);
 
   var xScale = d3.scaleLinear()
-    .domain(d3.extent(data[1].values, d => d.x))
+    .domain(d3.extent(data2[2].values, d => d.x))
     .range([0, width-margin]);
 
   var yScale = d3.scaleLinear()
-    .domain([0, d3.max(data[1].values, d => d.y)])
+    .domain([0, d3.max(data2[2].values, d => d.y)])
     .range([height-margin, 0]);
 
-  var svg = d3.select(".lineGraph").transition();
   /* Add line into SVG */
   var line = d3.line()
     .x(d => xScale(d.x))
     .y(d => yScale(d.y));
 
-    // let lines = svg.append('g')
-    //   .attr('class', 'lines');
+  // select all lines
+  var svg = d3.select("#lineGraphTest");
 
-    /* Add Axis into SVG */
-    var xAxis = d3.axisBottom(xScale).ticks(5).tickFormat(d3.format("d"));
-    var yAxis = d3.axisLeft(yScale).ticks(5);
 
-  svg.select(".line")
-      .duration(750)
-      .attr('d', d => line(d.values))
+  var lines = svg.selectAll("lines")
+
+      .data(data2);
+
+    // lines.exit().remove();
+
+    lines
+      .enter()
+      .append('path');
+
+
+    lines
+      .transition()
+      .duration(200).attr('class', 'line')
+      .attr('d', function(d){ console.log(d); return line(d.values); })
+      .style('stroke', (d, i) => color(i));
+
+
+  /* Add Axis into SVG */
+  var xAxis = d3.axisBottom(xScale).ticks(5).tickFormat(d3.format("d"));
+  var yAxis = d3.axisLeft(yScale).ticks(5);
+
+
+  // set d attribute of line objects to new data
+  lines
+      .attr('d', function(d){console.log(d); return d.values});
+
+
+
+  lines.selectAll("circle")
+      .attr("cx", function(d){
+        console.log(d);})
+      .attr("cy", d => yScale(console.log(d.y)));
+
+
+  svg.select(".x.axis")
+      .call(xAxis);
 
   svg.select(".y.axis")
-      .duration(750)
       .call(yAxis);
 
-  svg.select(".y.axis")
-      .duration(750)
-      .call(yAxis)
+    });
 
 
     // lines.selectAll('.line-group')
@@ -335,7 +369,7 @@ function updateLineGraph(data){
     //   .text("Total values");
     //
 
-};
+}
 
 function lineGraph2(data){
   var width = 500;

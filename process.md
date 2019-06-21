@@ -89,4 +89,12 @@ Om het updaten uit te proberen, ben ik nu begonnen om de lijngrafiek op de intro
 
 Daarnaast moest ik nogmaals mijn data veranderen vandaag, omdat ik ook een pie chart moet maken die update. Mijn plan was om dit ook voor zowel mannen als vrouwen te doen, waaronder ook totaal daarvan. Echter heb ik vandaag met Nigel overlegd dat dit helaas niet mogelijk is, naar aanleiding van mijn hoeveelheid aan data en de keuzes die de gebruiker kan maken op de website. Daarom heb ik na overleg besloten om de piechart te baseren op het totaal aantal gesloten/lopende DBC's en het totaal mannen en vrouwen. Met deze data ga ik een pie chart maken voor leeftijdscategorie verdeling, waarbij de default voor heel Nederland laat zien. Als er dan geklikt wordt op een provincie, is het de bedoeling dat de pie chart verandert.
 
-Mijn doel in het weekend is om de website en alle grafieken ook mooier te maken. 
+Mijn doel in het weekend is om de website en alle grafieken ook mooier te maken.
+
+__21-06-2019__
+---
+De update van mijn linechart is gelukkig gelukt. Ik had vandaag met meerdere assistenten gezeten, maar zij wisten niet hoe het moest (want ik heb heel veel events bij mijn linechart). Na veel uitproberen is het mij gelukt, zodat als ik nu op een provincie klik in de map, de lijn en de assen verandert. Echter lukt dit nog niet voor de circles die aan de lijn verbonden zijn. Ik ga dit weekend proberen om de circles ook nog te updaten.
+
+Wat nog niet gelukt is, is het maken van de verschillende dropdown menus bij de bijhorende radiobuttons. Hopelijk kan ik dit maandag met iemand bespreken. Als dit gelukt is kan ik alle data updaten.
+
+Daarnaast heb ik een pie chart gemaakt, alleen voor NL (want dat ik mijn default). De update moet nog gemaakt worden voor zowel het dropdownmenu jaren en als je dan op de provincie klikt op de kaart. In het weekend ga ik dit maken. 

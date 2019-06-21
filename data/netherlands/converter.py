@@ -24,3 +24,4 @@ def convertion(infile, outfile):
 
 if __name__ == "__main__":
     convertion("datanetherlands.csv", "datanetherlands.json")
+    convertion("jaarverdeling.csv", "jaarverdeling.json")
