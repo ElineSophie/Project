@@ -1,9 +1,15 @@
 function dataMaps(nld, data, dataLine, dataPieChart){
 
-  var w = 450;
-  var h = 450;
+  var provinces = [];
+  Object.keys(data).forEach(function(d){
+    provinces.push(d);
+  })
 
-  var colour = d3v3.scale.category20();
+  console.log(provinces);
+  var w = 600;
+  var h = 600;
+
+  var colour = d3v3.scale.category20(provinces);
 
   // var max = -Infinity;
   // var min = Infinity;
@@ -27,7 +33,7 @@ function dataMaps(nld, data, dataLine, dataPieChart){
 
   // Projection of the map
   var projection = d3v3.geo.mercator()
-      .scale(1)
+      .scale(1.02)
       .translate([0.03,0.02]);
 
   // Make a projection for the coordinates
@@ -127,9 +133,16 @@ var tooltip = d3v5.select("body").append("div")
       //       return coords[1];
       //     })
       //     .text("this is text");
+
+      addLegend(colour, data)
 }
 
-function addLegend(color){
+function addLegend(colour, data){
+
+  var provinces = [];
+  Object.keys(data).forEach(function(d){
+    provinces.push(d);
+  })
 
   legendMarginTop  = 50,
                     legendMarginLeft = 30,
@@ -144,17 +157,17 @@ function addLegend(color){
       .attr("transform", "translate(" + 30 + "," + 50 + ")");
 
   var legends = legend.selectAll("#map")
-      .data(color.domain())
-    .enter().append("g")
+      .data(colour.domain())
+      .enter().append("g")
       .attr("class", "legend")
       .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
 
   // draw legend colored rectangles
   legends.append("rect")
-      .attr("x", 250 - 18)
+      .attr("x", 500)
       .attr("width", 18)
       .attr("height", 18)
-      .style("fill", color);
+      .style("fill", colour);
 
   // draw legend text
   legends.append("text")
@@ -162,7 +175,7 @@ function addLegend(color){
       .attr("y", 9)
       .attr("dy", ".35em")
       .style("text-anchor", "end")
-      .text(function(d) { return d});
+      .text(function(d){ return d});
 };
 
 function updateMap(val, d){
@@ -176,27 +189,23 @@ function initScatter(data){
   65+ aging rate for men and women in total.
   */
 
+
+
   //Width and height
-  var w = 500;
-  var h = 500;
+  var width = 600;
+  var height = 600;
 
   // Create svg
   var svg_scatterplot = d3v5.select(".scatter")
                           .append("svg")
                           .attr("class", "scatterplot")
-                          .attr("width", w)
-                          .attr("height", h);
-
-  svg_scatterplot.append("text")
-                  .attr("x", w / 2)
-                  .attr("y", 0 + 20)
-                  .attr("class", "title")
-                  .text("Scatterplot for year " + selected_year)
+                          .attr("width", width)
+                          .attr("height", height);
 
   // Create margins and dimensions for the graph
   var margin = {top: 40, right: 40, bottom: 120, left: 90};
-  var graphWidth = w - margin.left - margin.right;
-  var graphHeight = h - margin.top - margin.bottom
+  var graphWidth = width - margin.left - margin.right;
+  var graphHeight = height - margin.top - margin.bottom
 
   // Append a group to svg and save as graph
   var graph = svg_scatterplot.append('g')
@@ -224,6 +233,18 @@ function initScatter(data){
                 .range([0, graphWidth])
                 .nice();
 
+  // Set variables for colours
+  var lowest = Math.round(d3v5.max(data, d => d["Totaal aantal lopend"]) * (1/5));
+  var low = Math.round(d3v5.max(data, d => d["Totaal aantal lopend"]) * (2/5));
+  var middle = Math.round(d3v5.max(data, d => d["Totaal aantal lopend"]) * (3/5));
+  var high = Math.round(d3v5.max(data, d => d["Totaal aantal lopend"]) * (4/5));
+  var highest = Math.round(d3v5.max(data, d => d["Totaal aantal lopend"]));
+
+  // Set color scale for circles
+  var colorScale = d3v5.scaleThreshold()
+                      .domain([lowest, low, middle, high, highest])
+                      .range(colorbrewer.Blues[5]);
+
   var tip = d3v5.select('.svg_scatter')
     .append('text')
     .attr('class', 'tip')
@@ -241,6 +262,7 @@ function initScatter(data){
       .attr("r", "5")
       .attr("cx", d => xScale(d["Totaal aantal lopend"]))
       .attr("cy", d => yScale(d["65+ totaal"]))
+      .attr("fill", d => colorScale(d["Totaal aantal lopend"]))
       // .append("g")
       // .class("")
       .on('mouseover', function(d, i) {
@@ -269,6 +291,26 @@ function initScatter(data){
     xAxis.call(x);
     yAxis.call(y);
 
+    // Add text to the graph
+
+
+    svg_scatterplot.append("text")
+                    .attr("x", width / 2.5)
+                    .attr("y", 0 + 20)
+                    .attr("class", "title")
+                    .text("Scatterplot for year " + selected_year)
+
+    svg_scatterplot.append("text")
+                  .attr("x", -300)
+                  .attr("y", 15)
+                  .attr("transform", "rotate(-90)")
+                  .text("Aging rate");
+
+  svg_scatterplot.append("text")
+  .attr("x", width / 2)
+  .attr("y", 530)
+  .text("Number of people with dementia")
+
 };
 
 function updateScatter(val, gender, age, data = globaldata[0]){
@@ -279,13 +321,13 @@ function updateScatter(val, gender, age, data = globaldata[0]){
   var yAxis = d3v5.selectAll("yax");
   //
   //Width and height
-  var w = 500;
-  var h = 500;
+  var width = 600;
+  var height = 600;
 
   // Create margins and dimensions for the graph
   var margin = {top: 40, right: 40, bottom: 120, left: 90};
-  var graphWidth = w - margin.left - margin.right;
-  var graphHeight = h - margin.top - margin.bottom;
+  var graphWidth = width - margin.left - margin.right;
+  var graphHeight = height - margin.top - margin.bottom;
 
   // Set scales x and y and padding if necessary
   var yScale = d3v5.scaleLinear()
@@ -297,6 +339,18 @@ function updateScatter(val, gender, age, data = globaldata[0]){
                 .domain([d3v5.min(data[val], d => d[gender]), d3v5.max(data[val], d => d[gender])])
                 .range([0, graphWidth])
                 .nice();
+
+  // Set variables for colours
+  var lowest = Math.round(d3v5.max(data, d => d["Totaal aantal lopend"]) * (1/5));
+  var low = Math.round(d3v5.max(data, d => d["Totaal aantal lopend"]) * (2/5));
+  var middle = Math.round(d3v5.max(data, d => d["Totaal aantal lopend"]) * (3/5));
+  var high = Math.round(d3v5.max(data, d => d["Totaal aantal lopend"]) * (4/5));
+  var highest = Math.round(d3v5.max(data, d => d["Totaal aantal lopend"]));
+
+  // Set color scale for circles
+  var colorScale = d3v5.scaleThreshold()
+                      .domain([lowest, low, middle, high, highest])
+                      .range(colorbrewer.Blues[5]);
 
  update_title = svg_scatterplot.selectAll("title")
                     .text("Scatterplot for year " + val);
@@ -339,7 +393,7 @@ function initLine(data){
 
   var width = 500;
   var height = 400;
-  var margin = 50;
+  var margin = 80;
 
   var duration = 250;
 
@@ -389,8 +443,8 @@ function initLine(data){
           .style("fill", "steelblue")
           .text(d.name)
           .attr("text-anchor", "middle")
-          .attr("x", (width-margin)/2)
-          .attr("y", 5);
+          .attr("x", (width-margin) / 1.5)
+          .attr("y", 100);
       })
     .on("mouseout", function(d) {
         svg.select(".title-text").remove();
@@ -433,7 +487,7 @@ function initLine(data){
           .style("cursor", "pointer")
           .append("text")
           .attr("class", "text")
-          .text(`${d.y}`)
+          .text(`${d.y / 1000}`)
           .attr("x", d => xScale(d.x) + 5)
           .attr("y", d => yScale(d.y) - 10)
       })
@@ -479,10 +533,23 @@ function initLine(data){
   svg.append("g")
     .attr("class", "y-axis")
     .call(yAxis)
-    .append('text')
-    .attr("y", 15)
+
+  svg.append("text")
+      .attr("x", width / 3)
+      .attr("h", 10)
+      .attr("class", "titleScatter")
+      .text("Prognose for " + data.name)
+
+  svg.append('text')
+    .attr("x", -260)
+    .attr("y", -60)
     .attr("transform", "rotate(-90)")
-    .attr("fill", "#000");
+    .text("Number of people with dementia")
+
+  svg.append("text")
+      .attr("x", 350)
+      .attr("y", 360)
+      .text("Years");
 };
 
 function updateLine(data, province){
@@ -601,7 +668,6 @@ function initPiechart(data){
     }
   })
 
-  console.log(initName);
   // Create array of objects of search results to be used by D3
    var data_use = [];
    for(var key in initData) {
@@ -636,6 +702,13 @@ function initPiechart(data){
      .domain(data_use[0])
      .range(["green", "blue", "yellow", "orange", "lightblue"])
 
+   var tip = d3v5.select('.pie')
+     .append('text')
+     .attr('class', 'tip')
+     .html(function(d){
+       return "";
+     });
+
    // Compute the position of each group on the pie:
    var pie = d3v5.pie()
      .value(function(d) {return d.value; })
@@ -656,15 +729,23 @@ function initPiechart(data){
      .attr("stroke", "black")
      .style("stroke-width", "2px")
      .style("opacity", 0.7)
-     .on("mouseover", function(d){
-       return d
+     .on('mouseover', function(d, i) {
+       tip.style('display', 'block')
+       tip.style("left", (d3v5.event.pageX) + "px")
+       tip.style("top", (d3v5.event.pageY - 28) + "px")
+       tip.html("Hello")
+     })
+     .on('mouseout', function(d, i) {
+       tip.transition()
+       .delay(50)
+       .style('display', 'none');
      });
 
-     svg.append("text")
-        .attr("class", "titlePie")
-         .attr("x", -40)
-         .attr("y", 0 - 200)
-         .text("Pie chart: " + initName)
+   svg.append("text")
+      .attr("class", "titlePie")
+       .attr("x", -40)
+       .attr("y", 0 - 200)
+       .text("Pie chart: " + initName)
 }
 
 function updatePie(year, data, provinces = "Nederland"){
@@ -742,4 +823,9 @@ function showSelect2(){
   onselect.className = 'hide';
   var select2 = document.getElementById('Gender2');
   select2.className = 'show';
+};
+
+function showSelectYear(){
+  var select = document.getElementById('year');
+  select.className = 'show';
 };

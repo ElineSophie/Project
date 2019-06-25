@@ -8,6 +8,15 @@ body {
   background: #f1f1f1;
 }
 
+body, html {
+  height: 100%;
+}
+
+.container{
+  position: absolute;
+  min-width: 80px;
+}
+
 .header {
   padding: 30px;
   text-align: center;
@@ -19,13 +28,13 @@ body {
 }
 
 .bg-img {
-  background-image: url("../img/dementie.jpg");
-  min-height: 500px;
-  opacity: 1.0;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  position: relative;
+  background-image: url("../img/dementia.png");
+  position: static;
+  background-color: #cccccc; /* Used if the image is unavailable */
+  height: 100%; /* You must set a specified height */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover; /* Resize the background image to cover the entire container */
 }
 
 .inner-container {

@@ -104,3 +104,7 @@ __25-06-2019__
 In het weekend en gisteren heb ik aan mijn updates gewerkt en aan mijn keuze menus (radiobuttons, dropdowns). Vandaag is het mij eindelijk gelukt om de data van de dropdown en de radiobuttons aan mijn grafiek te linken. Daarnaast werken al mijn linked views, echter niet voor titels en assen. Dit wil ik morgen bespreken.
 
 Daarnaast moet ik ook nog een legenda maken voor mijn datamap. Ik heb de keuze om het algemeen te houden of ook de legenda te koppelen aan mijn keuzemenu's. Voor de legenda wil ik een colorscale maken die per 10.000 inwoners de waarde laag-middle-hoog laat zien.
+
+De scatterplot bevat nu een colorscale, waardoor het nu mogelijk is om een legenda te maken. De legenda geeft lowest to highest dementia rates weer, wat voor elk menu kan veranderen. In de scatterplot kan je dan ook goed zien of er een relatie/correlatie is tussen vergrijzing en dementie cijfers voor elke provincie.
+
+Alle grafieken hebben nu ook titels en astitels. Echter moet er nog wel een update worden gedaan voor enkele titels. 

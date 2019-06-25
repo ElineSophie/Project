@@ -19,6 +19,7 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
+<script type="text/javascript" src="https://d3js.org/colorbrewer.v1.min.js"></script>
 		<script src="http://d3js.org/d3.v5.min.js"></script>
 		<link rel="stylesheet" href="../css/dementianetherlands.css">
 		<script>
@@ -55,12 +56,12 @@
 			</nav>
 
 			<div class="wrapper">
-			  <div class="one">
+			  <div class="explain">
 					<h5>Visualisation of dementia in the netherlands</h5>
 					<hr>
 					<p> <small>Text about the visualisations.</small></p>
 				</div>
-				<div class="Test">
+			  <div class="menu">
 					<input id="r1" type="radio" name="Treatment" id="Lopend" value="Ongoing" onclick="showSelect();">Ongoing DTC
 					<input id="r2" type="radio" name="Treatment" id="Gesloten" value="Closed" onclick="showSelect2();">Closed DTC
 
@@ -78,25 +79,25 @@
 					 <option id="totwomenges" value="Totaal aantal vrouwen gesloten">Only women</option>
 				 </select>
 
-				 <select id="AgeTot" class="hide" name = "Choiceage">
+				 <select id="AgeTot" class="hide" name="Choiceage" onclick="showSelectYear();">
 					 <option value="">--Choose--</option>
 					 <option value="65+ totaal">65+ total m/w</option>
 					 <option value="80+ totaal">80+ total m/w</option>
 				 </select>
 
-				 <select id="AgeMen" class="hide" name = "Choiceage">
+				 <select id="AgeMen" class="hide" name="Choiceage" onclick="showSelectYear();">
 					 <option value="">--Choose--</option>
 					 <option value="65+ mannen">65+ men</option>
 					 <option value="80+ mannen">80+ men</option>
 				 </select>
 
-				 <select id="AgeWomen" class="hide" name = "Choiceage">
+				 <select id="AgeWomen" class="hide" name="Choiceage" onclick="showSelectYear();">
 					 <option value="">--Choose--</option>
 					 <option value="65+ vrouwen">65+ women</option>
 					 <option value="80+ vrouwen">80+ women</option>
 				 </select>
 
-					<select id="year" class = "dropdown">
+					<select id="year" class="hide" name="dropdownyears">
 						 <option class="year1" value="2009">Data for year 2009</option>
 						 <option class="year1" value="2010">Data for year 2010</option>
 						 <option class="year1" value="2011">Data for year 2011</option>
@@ -105,102 +106,35 @@
 						 <option class="year1" value="2014">Data for year 2014</option>
 						 <option class="year1" value="2015">Data for year 2015</option>
 				 </select>
+			 </div>
+			  <div class="text">
+					<h3>Aging in Netherlands</h3>
+					<hr>
+					<p>According to the CBS, the absolute death rate from dementia has
+						increased within the Netherlands. It also emerged that the lowest
+						mortality rate from dementia is in Zeeland and North and East Gelderland. </p>
+					<p>This regional spread has been tested against the national average,
+						where the calculated the total death and death by cause or death by region.</p>
+					<p>The number of people with dementia will rise explosively in the future to more
+						than half a million in 2040 as a result of the aging population. Until 2050,
+						the number of people with dementia will increase further to more than 620,000.</p>
 				</div>
-			 	<div class="two">
+			  <div class="graphmap">
 					<div class="datamap" width="50%" height="400px" style="float:left; margin-top:100px;">
-							<svg id="map" width="50%" height="400px"></svg>
-					</div >
-				</div>
-			  <div class="three">
-						<h3>Aging in Netherlands</h3>
-						<hr>
-						<p><small>Text about aging and dementia.</small></p>
-				</div>
-			  <div class="four">
-					<div class="scatter" width = "50%" height = "400px" style="float:right; margin-top:100px;">
+								<svg id="map" width="50%" height="400px"></svg>
+						</div >
 					</div>
+			  <div class="graphscatter">
 					<div class="scatter" width = "50%" height = "400px" style="float:right; margin-top:100px;">
-					</div>
-				</div>
-			  <div class="five">
-					<div class="pie">
 						</div>
-				</div>
-			  <div class="six">
+					</div>
+			  <div class="graphpie">
+					<div class="pie">
+						</div></div>
+			  <div class="graphline">
 					<div class="prognose">
 					</div>
 				</div>
 			</div>
-<!--
-			<div class="container-fluid text-center">
-				<div class="row content">
-					<div class="col-sm-2 sidenav">
-						<h3>Aging in Netherlands</h3>
-						<hr>
-						<p> <small>Text about aging and dementia.</small></p>
-					</div>
-					<div class="col-sm-8 text-left">
-						<h5><small>About the visualizations<small></h5>
-
-						<hr>
-						<h3>Test</h3>
-						<p>Lorem ipsum...</p>
-						<svg id="scatter" width = "100%" height = "400px"></svg> -->
-						<!-- <input type="radio" name="Treatment" id="Lopend" value="Ongoing" onclick="dropDown(0)" required>Ongoing DTC
-						<input type="radio" name="Treatment" id="Gesloten" value="Closed" onclick="dropDown(1)" required>Closed DTC
-
-					 <select id="Gender1" name = "Choicegender" class="required">
-						 <option value="">--Choose--</option>
-						 <option value="Totalmw">Total men and women</option>
-						 <option value="Men">Only men</option>
-						 <option value="Women">Only women</option>
-					 </select>
-					 <select id="Gender2" name = "Choicegender" class="required">
-						<option value="">--Choose--</option>
-						<option value="Totalmw">Total men and women</option>
-						<option value="Men">Only men</option>
-						<option value="Women">Only women</option>
-					</select>
-					 <select id="year" class = "dropdown">
-							<option class="year1" value="2009">Data for year 2009</option>
-							<option class="year1" value="2010">Data for year 2010</option>
-							<option class="year1" value="2011">Data for year 2011</option>
-							<option class="year1" value="2012">Data for year 2012</option>
-							<option class="year1" value="2013">Data for year 2013</option>
-							<option class="year1" value="2014">Data for year 2014</option>
-							<option class="year1" value="2015">Data for year 2015</option>
-					</select>
-						<div class="datamap" width="50%" height="400px" style="float:left; margin-top:100px;">
-								<svg id="map" width="50%" height="400px"></svg>
-						</div >
-						<div class="scatter" width = "50%" height = "400px" style="float:right; margin-top:100px;">
-						</div>
-						<div class="prognose">
-						</div>
-					</div>
-				</div>
-			</div> -->
-			<!-- <script>
-				function dropDown(x){
-					if(x==0){
-						document.getElementById("Gender1").style.display="block";
-					}
-					else if(x==1){
-						document.getElementById("Gender2").style.display="block";
-					}
-					else{
-						document.getElementById("Gender1").style.display="hide";
-						document.getElementById("Gender2").style.display="hide";
-					}
-				}
-				function hideDropdown(){
-					if ($("#Lopend").is(":checked")){
-						$("#Gender1").removeAttr("disabled");
-					}
-					if ($("#Closed").is(":checked"){
-						$("#Gender2".removeAttr("disabled");)
-					})
-				}
-			</script> -->
 	</body>
 </html>

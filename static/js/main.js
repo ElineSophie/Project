@@ -83,6 +83,10 @@ window.onload = function loadData(){
         }
       })
 
+      d3v5.select("#ChoiceName").on("click", function(d){
+
+      })
+
         console.log(document.getElementById("Gender1").value);
 
       d3v5.select("#year")
@@ -113,8 +117,6 @@ window.onload = function loadData(){
             else if (document.getElementById("Gender2").value == "Totaal aantal vrouwen gesloten"){
               age = document.getElementById("AgeWomen").value;
             };
-
-            console.log(age);
 
             updateScatter(this.value, gender, age);
             updateMap(this.value);
