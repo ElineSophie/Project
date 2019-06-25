@@ -1,75 +1,29 @@
-var globaldata = []
-var glob = []
+function dataMaps(nld, data, dataLine, dataPieChart){
 
-var selected_year = 2009
-
-window.onload = function loadData(){
-
-      // Load in data
-    var requests = [d3v5.json("../../data/netherlands/nld.json"),
-    d3v5.json("../../data/netherlands/map.json"),
-    d3v5.json("../../data/netherlands/datanetherlands.json"),
-    d3v5.json("../../data/netherlands/prognose.json"),
-    d3v5.json("../../data/netherlands/jaarverdeling.json")];
-    Promise.all(requests).then(function(res) {
-
-        dataMaps(res[0], res[1], res[3])
-    //
-    keys = Object.keys(res[2])
-    values = Object.values(res[2])
-
-          // console.log(glob);
-
-        globaldata.push(res[2]);
-        globaldata.push(res[1]);
-        // updateMap();
-
-        console.log(globaldata);
-
-        // Remove netherlands in dataset
-        for (d in res[2]){
-            res[2][d].shift();
-          };
-
-        initScatter(res[2]["2009"]);
-        console.log(res[2]);
-
-        var year = d3v5.select("#year");
-
-
-        d3v5.select("#year")
-            .on("change", function(d){
-              updateScatter(this.value);
-              updateMap(this.value);
-              updatePie(this.value)
-            });
-
-
-
-
-        // d3v5.select("#Gender1")
-        //     .on("change", function(d){
-        //       console.log(this.value);
-        //       updateScatter(this.value);
-        //     });
-
-        initLine(res[3]);
-
-        initPiechart(res[4]["2009"]);
-
-    }).catch(function(e){
-        throw(e);
-        });
-
-};
-
-function dataMaps(nld, data, dataLine){
-  console.log(data);
   var w = 450;
   var h = 450;
 
-  console.log(dataLine);
   var colour = d3v3.scale.category20();
+
+  // var max = -Infinity;
+  // var min = Infinity;
+  //
+  // Object.values(data).forEach(function(key){
+  //   console.log(key[0]);
+  //   if (key[0]["Tot per 100.000 inwoners lopend"] > max){
+  //     max = key[0]["Tot per 100.000 inwoners lopend"]}
+  //   if (key[0]["Tot per 100.000 inwoners lopend"] < min){
+  //     min = key[0]["Tot per 100.000 inwoners lopend"]}
+  // })
+  //
+  // console.log(max);
+  // console.log(min);
+  //
+  // var colour = d3v5.scaleThreshold()
+  //                     .domain([(1/3 * max),
+  //                              (2/3 * max),
+  //                              (max)])
+  //                     .range(['red', 'yellow', 'green']);
 
   // Projection of the map
   var projection = d3v3.geo.mercator()
@@ -99,9 +53,6 @@ var tooltip = d3v5.select("body").append("div")
                 .attr("height", graphHeight)
                 .attr('transform', `translate(${margin.left}, ${margin.top})`);
 
-  // d3v3.json("../../data/netherlands/nld.json", function(error, nld) {
-  //   console.log(nld);
-      // Get features from the dataset
   var l = topojson.feature(nld, nld.objects.subunits).features[3],
       b = path.bounds(l),
       s = .2 / Math.max((b[1][0] - b[0][0]) / graphWidth, (b[1][1] - b[0][1]) / graphHeight),
@@ -123,27 +74,27 @@ var tooltip = d3v5.select("body").append("div")
           return d.properties.name;
       })
       .on("mouseover", function(d) {
-            d3v5.select(this).attr("fill", "yellow");
+            // d3v5.select(this).attr("fill", "yellow");
             tooltip.transition()
             .duration(200)
             .style("opacity", .9);
             tooltip.html(function(){
               point = undefined
               data[d.properties.name].forEach(period=>{
-                console.log(selected_year);
                 if (period.Perioden == selected_year) {
                    point = period
                    return;
                 }})
               // hier kan je de variabele printen die je wilt hebben
-              return point["Tot per 100.000 inwoners lopend"]
+              return "Total per 100.000 inhabitants: " + point["Tot per 100.000 inwoners lopend"]
+              // point["Tot per 100.000 inwoners gesloten"]
             })
             .style("left", (d3v5.event.pageX) + "px")
             .style("top", (d3v5.event.pageY - 28) + "px");
           })
       .on("mouseout", function(d){
-         d3v5.select("path").attr("fill",function(d, i) {
-             return colour(i);});
+         // d3v5.select("path").attr("fill",function(d, i) {
+         //     return colour(i);});
         tooltip.transition()
         .duration(100)
         .style("opacity", 0)
@@ -151,7 +102,9 @@ var tooltip = d3v5.select("body").append("div")
         .style("top", (d3v5.event.pageY - 28) + "px");
       })
       .on("click", function(d){
+        var year = selected_year
         updateLine(dataLine, d.properties.name)
+        updatePie(year, dataPieChart, d.properties.name)
       });
           // .on("mouseover", function(d) {
           //   d3v5.select(this).attr("fill", "yellow")
@@ -176,23 +129,52 @@ var tooltip = d3v5.select("body").append("div")
       //     .text("this is text");
 }
 
+function addLegend(color){
+
+  legendMarginTop  = 50,
+                    legendMarginLeft = 30,
+                    legendWidth  = 250,
+                    legendHeight = 150;
+
+  var svg = d3v5.selectAll("#map")
+  var legend = svg.append('g')
+      .attr('width', 250)
+      .attr('height', 150)
+
+      .attr("transform", "translate(" + 30 + "," + 50 + ")");
+
+  var legends = legend.selectAll("#map")
+      .data(color.domain())
+    .enter().append("g")
+      .attr("class", "legend")
+      .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+  // draw legend colored rectangles
+  legends.append("rect")
+      .attr("x", 250 - 18)
+      .attr("width", 18)
+      .attr("height", 18)
+      .style("fill", color);
+
+  // draw legend text
+  legends.append("text")
+      .attr("x", 250 - 24)
+      .attr("y", 9)
+      .attr("dy", ".35em")
+      .style("text-anchor", "end")
+      .text(function(d) { return d});
+};
+
 function updateMap(val, d){
   selected_year = val
 };
 
 function initScatter(data){
-
-  // var initData;
-  //
-  // Object.values(data).forEach(function(value){
-  //   console.log(value);
-  //   if(value.Regios != "Nederland"){
-  //     initData = [value]
-  //   }
-  //   console.log(value.Regios)
-  // })
-
-  // console.log(initData);
+  /*
+  This function will draw a scatterplot with default data, namely
+  on the x-axis the total ongoing DCT dementia patients and on the y-axis the
+  65+ aging rate for men and women in total.
+  */
 
   //Width and height
   var w = 500;
@@ -204,6 +186,12 @@ function initScatter(data){
                           .attr("class", "scatterplot")
                           .attr("width", w)
                           .attr("height", h);
+
+  svg_scatterplot.append("text")
+                  .attr("x", w / 2)
+                  .attr("y", 0 + 20)
+                  .attr("class", "title")
+                  .text("Scatterplot for year " + selected_year)
 
   // Create margins and dimensions for the graph
   var margin = {top: 40, right: 40, bottom: 120, left: 90};
@@ -236,6 +224,13 @@ function initScatter(data){
                 .range([0, graphWidth])
                 .nice();
 
+  var tip = d3v5.select('.svg_scatter')
+    .append('text')
+    .attr('class', 'tip')
+    .html(function(d){
+      return "";
+    });
+
   // Create circles
   var dot = graph.selectAll("circle")
                   .data(data);
@@ -245,7 +240,26 @@ function initScatter(data){
       .attr("class", "dot")
       .attr("r", "5")
       .attr("cx", d => xScale(d["Totaal aantal lopend"]))
-      .attr("cy", d => yScale(d["65+ totaal"]));
+      .attr("cy", d => yScale(d["65+ totaal"]))
+      // .append("g")
+      // .class("")
+      .on('mouseover', function(d, i) {
+
+        // console.log(d["65+ totaal"]);
+        // tip.transition().duration(750);
+        // tip.style('top', yScale(d["65+ totaal"]) - 20 + 'px');
+        // tip.style('left', xScale(d["Totaal aantal lopend"]) + 'px');
+        tip.style('display', 'block')
+        tip.attr("x", xScale(d["Totaal aantal lopend"]))
+        tip.attr("y", yScale(d["65+ totaal"]))
+        tip.html("<tspan x='0' dy='1.2em'> Province: " + d.Regios + "</tspan>" + "<tspan x='0' dy='1.2em'> Total dementia patient: " + d["Totaal aantal lopend"] +
+        "</tspan> Aging rate: " + d["65+ totaal"])
+      })
+      .on('mouseout', function(d, i) {
+        tip.transition()
+        .delay(500)
+        .style('display', 'none');
+      });
 
 
     // Create and call the axes
@@ -257,7 +271,7 @@ function initScatter(data){
 
 };
 
-function updateScatter(val, data = globaldata[0]){
+function updateScatter(val, gender, age, data = globaldata[0]){
 
   var svg_scatterplot = d3v5.selectAll(".scatterplot");
   var graph = d3v5.selectAll(".svg_scatter");
@@ -275,23 +289,34 @@ function updateScatter(val, data = globaldata[0]){
 
   // Set scales x and y and padding if necessary
   var yScale = d3v5.scaleLinear()
-                .domain([d3v5.min(data[val], d => d["65+ totaal"]), d3v5.max(data[val], d => d["65+ totaal"])])
+                .domain([d3v5.min(data[val], d => d[age]), d3v5.max(data[val], d => d[age])])
                 .range([graphHeight, 0])
                 .nice();
 
   var xScale = d3v5.scaleLinear()
-                .domain([d3v5.min(data[val], d => d["Totaal aantal lopend"]), d3v5.max(data[val], d => d["Totaal aantal lopend"])])
+                .domain([d3v5.min(data[val], d => d[gender]), d3v5.max(data[val], d => d[gender])])
                 .range([0, graphWidth])
                 .nice();
+
+ update_title = svg_scatterplot.selectAll("title")
+                    .text("Scatterplot for year " + val);
 
   // Join new data
   var dot = graph.selectAll("circle")
                     .data(data[val]);
 
+  var tip = graph.selectAll("tip");
+
+    dot.exit()
+      .remove()
+      .enter()
+
   dot.transition()
-    .attr("cx", function(d) {
-      return xScale(d["Totaal aantal lopend"])})
-    .attr("cy", d => yScale(d["65+ totaal"]));
+    .attr("cx", function(d){
+      return xScale(d[gender]);})
+    .attr("cy", function(d){
+      console.log(d[age]);
+      return yScale(d[age]);});
 
     // Create and call the axes
     var x = d3v5.axisBottom(xScale);
@@ -329,7 +354,6 @@ function initLine(data){
   var circleRadius = 3;
   var circleRadiusHover = 6;
 
-
   /* Scale */
   var xScale = d3v5.scaleLinear()
     .domain(d3v5.extent(initData[0].values, d => d.x))
@@ -341,13 +365,13 @@ function initLine(data){
 
   /* Add SVG */
   var svg = d3v5.select(".prognose").append("svg")
+    .attr("class", "svg_prognose")
     .attr("width", (width+margin)+"px")
     .attr("height", (height+margin)+"px")
     .append('g')
     .attr("transform", `translate(${margin}, ${margin})`);
 
-
-  /* Add line into SVG */
+  // Add a line to the svg
   var line = d3v5.line()
     .x(d => xScale(d.x))
     .y(d => yScale(d.y));
@@ -362,7 +386,7 @@ function initLine(data){
     .on("mouseover", function(d) {
         svg.append("text")
           .attr("class", "title-text")
-          .style("fill", "green")
+          .style("fill", "steelblue")
           .text(d.name)
           .attr("text-anchor", "middle")
           .attr("x", (width-margin)/2)
@@ -374,7 +398,7 @@ function initLine(data){
     .append('path')
     .attr('class', 'line')
     .attr('d', d => line(d.values))
-    .style('stroke', "green")
+    .style('stroke', "steelblue")
     .style('opacity', lineOpacity)
     .on("mouseover", function(d) {
         d3v5.selectAll('.line')
@@ -396,16 +420,14 @@ function initLine(data){
           .style("cursor", "none");
       });
 
+  let circles = svg.append('g')
+    .attr('class', 'circles');
 
   /* Add circles in the line */
-  lines.selectAll("circle-group")
-    .data(initData).enter()
+  circles.selectAll("circle")
+    .data(initData[0].values).enter()
     .append("g")
-    .style("fill", "green")
-    .selectAll("circle")
-    .data(d => d.values).enter()
-    .append("g")
-    .attr("class", "circle")
+    .attr("class", "circletext")
     .on("mouseover", function(d) {
         d3v5.select(this)
           .style("cursor", "pointer")
@@ -413,7 +435,7 @@ function initLine(data){
           .attr("class", "text")
           .text(`${d.y}`)
           .attr("x", d => xScale(d.x) + 5)
-          .attr("y", d => yScale(d.y) - 10);
+          .attr("y", d => yScale(d.y) - 10)
       })
     .on("mouseout", function(d) {
         d3v5.select(this)
@@ -423,9 +445,11 @@ function initLine(data){
           .selectAll(".text").remove();
       })
     .append("circle")
+    .attr("class", "circles")
     .attr("cx", d => xScale(d.x))
     .attr("cy", d => yScale(d.y))
     .attr("r", circleRadius)
+    .style("fill", "steelblue")
     .style('opacity', circleOpacity)
     .on("mouseover", function(d) {
           d3v5.select(this)
@@ -458,21 +482,20 @@ function initLine(data){
     .append('text')
     .attr("y", 15)
     .attr("transform", "rotate(-90)")
-    .attr("fill", "#000")
-    .text("Total values");
+    .attr("fill", "#000");
 };
 
-function updateLine(data, gemeente){
+function updateLine(data, province){
 
   var updateData;
 
+  // Get the name of the province
   Object.values(data).forEach(function(value){
-    if(value.name == gemeente){
+    if(value.name == province){
       updateData = [value]
     }
   });
 
-  console.log(updateData);
   var width = 500;
   var height = 400;
   var margin = 50;
@@ -490,18 +513,16 @@ function updateLine(data, gemeente){
   var circleRadius = 3;
   var circleRadiusHover = 6;
 
-
-
-  var svg = d3v5.selectAll(".prognose");
+  // Select the classes for changes
+  var svg = d3v5.selectAll(".svg_prognose");
   var lines = svg.selectAll(".line-group");
-  var lines_line = lines.selectAll(".line")
-  var circless = svg.selectAll(".circle-group");
-  var cir = circless.selectAll(".circle");
+  var linedraw = lines.selectAll("path");
+  var circle_text = svg.selectAll(".circletext")
+  var circles = svg.selectAll("circle");
   var xax = svg.selectAll(".x-axis");
   var yax = svg.selectAll(".y-axis");
 
-
-  /* Scale */
+  // Scale
   var xScale = d3v5.scaleLinear()
     .domain(d3v5.extent(updateData[0].values, d => d.x))
     .range([0, width-margin]);
@@ -510,93 +531,77 @@ function updateLine(data, gemeente){
     .domain([0, d3v5.max(updateData[0].values, d => d.y)])
     .range([height-margin, 0]);
 
-    /* Add Axis into SVG */
-    var xAxis = d3v5.axisBottom(xScale)
-                    .ticks(5)
-                    .tickFormat(d3v5.format("d"));
-    var yAxis = d3v5.axisLeft(yScale).ticks(5);
+  // Add axis
+  var xAxis = d3v5.axisBottom(xScale)
+                  .ticks(5)
+                  .tickFormat(d3v5.format("d"));
+  var yAxis = d3v5.axisLeft(yScale).ticks(5);
 
-    xax.transition()
-        .duration(750)
-        .call(xAxis)
-
-    yax.transition()
-        .duration(750)
-        .call(yAxis);
-
-    var update = lines.data(updateData);
-
-    update.exit()
-          .remove()
-          .enter();
-
-  /* Add line into SVG */
+  // Add lines
   var line = d3v5.line()
     .x(d => xScale(d.x))
     .y(d => yScale(d.y));
 
-    update.transition()
-          .duration(750);
-          // .attr("d", d => line(d.values));
+  xax.transition()
+      .duration(750)
+      .call(xAxis)
 
-  var update2 = lines_line.data(updateData);
+  yax.transition()
+      .duration(750)
+      .call(yAxis);
 
-  update2.exit()
-          .remove()
-          .enter();
+  var updateLineText = lines.data(updateData);
 
-  update2.transition()
-          .duration(750)
-          .attr("d", d=>line(d.values))
-
-  update3 = circless.data(updateData);
-
-  update3.exit()
+  updateLineText.exit()
         .remove()
         .enter();
 
-  update4 = cir.data(d => d.values);
+  updateLineText.transition()
+        .duration(750);
 
-  update4.exit()
+  var lineUpdate = linedraw.data(updateData);
+
+  lineUpdate.exit()
           .remove()
           .enter();
 
-  update4.transition()
+  lineUpdate.transition()
+          .duration(750)
+          .attr("d", d=>line(d.values));
+
+  var updateCircleText = circle_text.data(updateData[0].values);
+
+  updateCircleText.exit()
+        .remove()
+        .enter();
+
+  updateCircleText.transition()
+        .duration(750);
+
+  circles.data(updateData[0].values);
+  circles.exit()
+         .remove()
+         .enter();
+
+  circles.transition()
           .duration(750)
           .attr("cx", d => xScale(d.x))
-          .attr("cy", d => yScale(d.y))
-  //
-  // var color = d3v5.scaleOrdinal(d3v5.schemeCategory10);
-  //
-  // /* Add line into SVG */
-  // var line = d3v5.line()
-  //   .x(d => xScale(d.x))
-  //   .y(d => yScale(d.y));
-  //
-  //
-  // lines.transition()
-  //     .duration(750)
-  //     .attr("d", line(d => d.value))
-  //
-  // svg.select(".x-axis")
-  //     .duration(750)
-  //     .call(xAxis)
-  //
-  // svg.select(".y-axis")
-  //     .duration(750)
-  //     .call(yAxis);
+          .attr("cy", d => yScale(d.y));
 };
 
 function initPiechart(data){
 
   var initData;
+  var initName;
 
   Object.values(data).forEach(function(value){
     if(value.Regios == "Nederland"){
       initData = [value]
+      initName = value.Regios
     }
   })
 
+  console.log(initName);
   // Create array of objects of search results to be used by D3
    var data_use = [];
    for(var key in initData) {
@@ -609,11 +614,9 @@ function initPiechart(data){
        "80-ouder": val["80-ouder"]
      });
    }
-
-   console.log(data_use);
    // set the dimensions and margins of the graph
-   var width = 450
-       height = 450
+   var width = 400
+       height = 400
        margin = 40
 
    // The radius of the pieplot is half the width or half the height (smallest one). I substract a bit of margin.
@@ -626,12 +629,12 @@ function initPiechart(data){
        .attr("width", width)
        .attr("height", height)
      .append("g")
-       .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+       .attr("transform", "translate(" + width / 1.8 + "," + height / 1.7 + ")");
 
    // set the color scale
    var color = d3v5.scaleOrdinal()
      .domain(data_use[0])
-     .range(["green", "blue", "yellow", "orange", "red"])
+     .range(["green", "blue", "yellow", "orange", "lightblue"])
 
    // Compute the position of each group on the pie:
    var pie = d3v5.pie()
@@ -644,6 +647,7 @@ function initPiechart(data){
      .data(data_ready)
      .enter()
      .append('path')
+     .attr("id", "pathPie")
      .attr('d', d3v5.arc()
        .innerRadius(0)
        .outerRadius(radius)
@@ -652,18 +656,27 @@ function initPiechart(data){
      .attr("stroke", "black")
      .style("stroke-width", "2px")
      .style("opacity", 0.7)
+     .on("mouseover", function(d){
+       return d
+     });
+
+     svg.append("text")
+        .attr("class", "titlePie")
+         .attr("x", -40)
+         .attr("y", 0 - 200)
+         .text("Pie chart: " + initName)
 }
 
-function updatePie(val, data){
+function updatePie(year, data, provinces = "Nederland"){
   var initData;
-  console.log(val);
+  var initName;
 
-  Object.values(data).forEach(function(value){
-    if(value.Regios == "Nederland"){
+  Object.values(data[year]).forEach(function(value){
+    if(value.Regios == provinces){
       initData = [value]
+      initName = value.Regios
     }
-  })
-
+  });
   // Create array of objects of search results to be used by D3
    var data_use = [];
    for(var key in initData) {
@@ -678,18 +691,44 @@ function updatePie(val, data){
    }
 
    // set the dimensions and margins of the graph
-   var width = 450
-       height = 450
+   var width = 400
+       height = 400
        margin = 40
 
    // The radius of the pieplot is half the width or half the height (smallest one). I substract a bit of margin.
    var radius = Math.min(width, height) / 2 - margin
 
    var svg = d3v5.select("svg_pie")
-                  .data(data[val])
+                  .data(initData);
 
+    // set the color scale
+    var color = d3v5.scaleOrdinal()
+      .domain(data_use[0])
+      .range(["green", "blue", "yellow", "orange", "lightblue"]);
+
+    // Compute the position of each group on the pie:
+    var pie = d3v5.pie()
+      .value(function(d) {return d.value; })
+    var dataUpdate = pie(d3v5.entries(data_use[0]))
+
+    var updatePie = d3v5.selectAll("#pathPie").data(dataUpdate);
+
+    updatePie.exit()
+            .remove()
+            .enter();
+
+    updatePie.transition()
+              .duration(750)
+              .attr('d', d3v5.arc()
+                .innerRadius(0)
+                .outerRadius(radius)
+              )
+              .attr('fill', function(d){ return(color(d.data.key)) })
+
+  updateText = svg.selectAll(".titlePie");
+
+  updateText.text("Pie chart: " + initName)
 }
-
 
 function showSelect() {
     var select = document.getElementById('Gender1');
@@ -699,17 +738,8 @@ function showSelect() {
 };
 
 function showSelect2(){
-  var select2 = document.getElementById('Gender2');
-  select2.className = 'show';
   var onselect = document.getElementById('Gender1');
   onselect.className = 'hide';
+  var select2 = document.getElementById('Gender2');
+  select2.className = 'show';
 };
-//
-// function selectAgeTotal(){
-//   var select = document.getElementById('AgeTot1');
-//   select.className = 'show';
-//   var onselect = document.getElementById('AgeTot2');
-//   onselect.className = 'hide';
-//   var on2select = document.getElementById('AgeTot2');
-//   on2select.className = 'hide';
-// }

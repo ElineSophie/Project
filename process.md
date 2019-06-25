@@ -97,4 +97,10 @@ De update van mijn linechart is gelukkig gelukt. Ik had vandaag met meerdere ass
 
 Wat nog niet gelukt is, is het maken van de verschillende dropdown menus bij de bijhorende radiobuttons. Hopelijk kan ik dit maandag met iemand bespreken. Als dit gelukt is kan ik alle data updaten.
 
-Daarnaast heb ik een pie chart gemaakt, alleen voor NL (want dat ik mijn default). De update moet nog gemaakt worden voor zowel het dropdownmenu jaren en als je dan op de provincie klikt op de kaart. In het weekend ga ik dit maken. 
+Daarnaast heb ik een pie chart gemaakt, alleen voor NL (want dat ik mijn default). De update moet nog gemaakt worden voor zowel het dropdownmenu jaren en als je dan op de provincie klikt op de kaart. In het weekend ga ik dit maken.
+
+__25-06-2019__
+---
+In het weekend en gisteren heb ik aan mijn updates gewerkt en aan mijn keuze menus (radiobuttons, dropdowns). Vandaag is het mij eindelijk gelukt om de data van de dropdown en de radiobuttons aan mijn grafiek te linken. Daarnaast werken al mijn linked views, echter niet voor titels en assen. Dit wil ik morgen bespreken.
+
+Daarnaast moet ik ook nog een legenda maken voor mijn datamap. Ik heb de keuze om het algemeen te houden of ook de legenda te koppelen aan mijn keuzemenu's. Voor de legenda wil ik een colorscale maken die per 10.000 inwoners de waarde laag-middle-hoog laat zien.

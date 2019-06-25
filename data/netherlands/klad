@@ -220,3 +220,57 @@ Updatemap
           // });
           // console.log(man);
           // };
+
+
+          function addLegend(color){
+
+            legendMarginTop  = 50,
+                              legendMarginLeft = 30,
+                              legendWidth  = 250,
+                              legendHeight = 150;
+                var svg = d3v5.selectAll("#map")
+                          var legend = svg.append('g')
+                              .attr('width', 250)
+                              .attr('height', 150)
+
+                              .attr("transform", "translate(" + 30 + "," + 50 + ")");
+
+                          var legends = legend.selectAll("#map")
+                              .data(color.domain())
+                            .enter().append("g")
+                              .attr("class", "legend")
+                              .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+                          // draw legend colored rectangles
+                          legends.append("rect")
+                              .attr("x", 250 - 18)
+                              .attr("width", 18)
+                              .attr("height", 18)
+                              .style("fill", color);
+
+                          // draw legend text
+                          legends.append("text")
+                              .attr("x", 250 - 24)
+                              .attr("y", 9)
+                              .attr("dy", ".35em")
+                              .style("text-anchor", "end")
+                              .text(function(d) { return d});
+                      };
+
+
+                      var initData = {}
+                      for (d in res[2]){
+                        // console.log(d);
+                        yearData=[]
+                        if (res[2][d].Regios != "Nederland"){
+                          yearData.push(res[2][d]);
+                          }
+                        initData[d] = yearDatas
+                      };
+
+
+                      // d3v5.select("#Gender1")
+                      //     .on("change", function(d){
+                      //       console.log(this.value);
+                      //       updateScatter(this.value);
+                      //     });

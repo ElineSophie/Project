@@ -84,6 +84,10 @@ function piechart(data){
         .on("mouseover", tooltip.show)
         .on("mouseout", tooltip.hide);
 };
+
+function initBarchart(data){
+  
+}
 // function barChart(data){
 //   // Remove any previous graphs
 //     d3.selectAll("rect")

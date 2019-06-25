@@ -21,7 +21,6 @@
 
 		<script src="http://d3js.org/d3.v5.min.js"></script>
 		<link rel="stylesheet" href="../css/dementianetherlands.css">
-		<script src="d3/d3-tip.js"></script>
 		<script>
 			d3v5 = d3;
 			window.d3 = null;
@@ -32,6 +31,7 @@
       d3v3 = d3;
       window.d3 = null;
     </script>
+		<script type="text/javascript" src="../js/main.js"></script>
 		<script type="text/javascript" src="../js/dementianetherlands.js"></script>
 	</head>
 	<body>
@@ -61,44 +61,40 @@
 					<p> <small>Text about the visualisations.</small></p>
 				</div>
 				<div class="Test">
-					<input type="radio" name="Treatment" id="Lopend" value="Ongoing" onclick="showSelect();">Ongoing DTC
-					<input type="radio" name="Treatment" id="Gesloten" value="Closed" onclick="showSelect2();">Closed DTC
+					<input id="r1" type="radio" name="Treatment" id="Lopend" value="Ongoing" onclick="showSelect();">Ongoing DTC
+					<input id="r2" type="radio" name="Treatment" id="Gesloten" value="Closed" onclick="showSelect2();">Closed DTC
 
 					<select id="Gender1" class="hide" name = "ChoicegenderLopend">
 						<option value="">--Choose--</option>
-						<option id="Totalmw" value="Totaal aantal lopend" onclick="selectAgeTotal();">Total men and women</option>
-						<option id="men" value="Totaal aantal mannen lopen">Only men</option>
-						<option id="women"value="Totaal aantal vrouwen lopend">Only women</option>
+						<option id="totlop" value="Totaal aantal lopend">Total men and women</option>
+						<option id="totmenlop" value="Totaal aantal mannen lopend">Only men</option>
+						<option id="totwomenlop" value="Totaal aantal vrouwen lopend">Only women</option>
 					</select>
 
 					<select id="Gender2" class="hide" name="ChoicegenderGesloten">
-					 <option value="">--Choose--</option>
-					 <option value="Totaal aantal gesloten">Total men and women</option>
-					 <option value="Totaal aantal mannen gesloten">Only men</option>
-					 <option value="Totaal aantal vrouwen gesloten">Only women</option>
+						<option value="">--Choose--</option>
+					 <option id="totges" value="Totaal aantal gesloten">Total men and women</option>
+					 <option id="totmenges" value="Totaal aantal mannen gesloten">Only men</option>
+					 <option id="totwomenges" value="Totaal aantal vrouwen gesloten">Only women</option>
 				 </select>
 
-				 <select id="AgeTot1" class="hide" name = "Choiceage">
+				 <select id="AgeTot" class="hide" name = "Choiceage">
 					 <option value="">--Choose--</option>
-					 <option value="65+ totaal">65+ Totaal</option>
-					 <option value="80+ totaal">80+ Totaal</option>
+					 <option value="65+ totaal">65+ total m/w</option>
+					 <option value="80+ totaal">80+ total m/w</option>
 				 </select>
 
-				 <select id="AgeTot2" class="hide" name = "Choiceage">
+				 <select id="AgeMen" class="hide" name = "Choiceage">
 					 <option value="">--Choose--</option>
-					 <option value="Totalmw">Total men and women</option>
-					 <option value="Men">Only men</option>
-					 <option value="Women">Only women</option>
+					 <option value="65+ mannen">65+ men</option>
+					 <option value="80+ mannen">80+ men</option>
 				 </select>
 
-				 <select id="AgeTot3" class="hide" name = "Choiceage">
+				 <select id="AgeWomen" class="hide" name = "Choiceage">
 					 <option value="">--Choose--</option>
-					 <option value="Totalmw">Total men and women</option>
-					 <option value="Men">Only men</option>
-					 <option value="Women">Only women</option>
+					 <option value="65+ vrouwen">65+ women</option>
+					 <option value="80+ vrouwen">80+ women</option>
 				 </select>
-
-
 
 					<select id="year" class = "dropdown">
 						 <option class="year1" value="2009">Data for year 2009</option>

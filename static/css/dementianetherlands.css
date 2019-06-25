@@ -13,7 +13,7 @@ body{
 
 * {box-sizing: border-box;}
 .wrapper {
-  max-width: 100%;
+  max-width: 50%;
   margin: 0 auto;
 }
 
@@ -22,7 +22,7 @@ body{
   border-radius: 2px;
   background-color:white;
   padding: 1em;
-  color: #d9480f;
+  color: black;
 }.wrapper {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -33,9 +33,7 @@ body{
 .one {
   grid-column: 2 / 4;
   grid-row: 1;
-
 }
-
 .two {
   grid-column: 2 / 3;
   grid-row: 2 / 5;
@@ -88,6 +86,7 @@ padding: 15px;
 }
 
 .tooltip{
+  position: absolute;
   background-color: "red";
   border: 2px solid black;
 }

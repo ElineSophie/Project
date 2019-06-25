@@ -13,7 +13,7 @@ window.onload = function loadData(){
 
     d3.select("#option").on("click", function(d){
       // console.log(res[1]);
-      updateLineGraph();
+      lineGraph2(res[1]);
     });
     // updateLineGraph(res[1]);
     // console.log(res[1]);
@@ -68,7 +68,7 @@ function lineGraph(data){
     .x(d => xScale(d.x))
     .y(d => yScale(d.y));
 
-  let lines = svg.append('g')
+  var lines = svg.append('g')
     .attr('class', 'lines');
 
   lines.selectAll('.line-group')
@@ -176,92 +176,145 @@ function lineGraph(data){
     .text("Total values");
 
 };
-function updateLineGraph(){
-
-  console.log("safsaf");
-
-  // console.log(data);
-  d3.json("../../data/introduction/regionprevalence.json").then(function(data2){
-
-    console.log(data2);
-
-  var width = 500;
-  var height = 300;
-  var margin = 50;
-  var duration = 250;
-
-  var lineOpacity = "0.25";
-  var lineOpacityHover = "0.85";
-  var otherLinesOpacityHover = "0.1";
-  var lineStroke = "1.5px";
-  var lineStrokeHover = "2.5px";
-
-  var circleOpacity = '0.85';
-  var circleOpacityOnLineHover = "0.25"
-  var circleRadius = 3;
-  var circleRadiusHover = 6;
-
-  var color = d3.scaleOrdinal(d3.schemeCategory10);
-
-  var xScale = d3.scaleLinear()
-    .domain(d3.extent(data2[2].values, d => d.x))
-    .range([0, width-margin]);
-
-  var yScale = d3.scaleLinear()
-    .domain([0, d3.max(data2[2].values, d => d.y)])
-    .range([height-margin, 0]);
-
-  /* Add line into SVG */
-  var line = d3.line()
-    .x(d => xScale(d.x))
-    .y(d => yScale(d.y));
-
-  // select all lines
-  var svg = d3.select("#lineGraphTest");
-
-
-  var lines = svg.selectAll("lines")
-
-      .data(data2);
-
-    // lines.exit().remove();
-
-    lines
-      .enter()
-      .append('path');
-
-
-    lines
-      .transition()
-      .duration(200).attr('class', 'line')
-      .attr('d', function(d){ console.log(d); return line(d.values); })
-      .style('stroke', (d, i) => color(i));
-
-
-  /* Add Axis into SVG */
-  var xAxis = d3.axisBottom(xScale).ticks(5).tickFormat(d3.format("d"));
-  var yAxis = d3.axisLeft(yScale).ticks(5);
-
-
-  // set d attribute of line objects to new data
-  lines
-      .attr('d', function(d){console.log(d); return d.values});
-
-
-
-  lines.selectAll("circle")
-      .attr("cx", function(d){
-        console.log(d);})
-      .attr("cy", d => yScale(console.log(d.y)));
-
-
-  svg.select(".x.axis")
-      .call(xAxis);
-
-  svg.select(".y.axis")
-      .call(yAxis);
-
-    });
+// function updateLineGraph(updateData){
+//   console.log(updateData);
+//   var width = 500;
+//   var height = 300;
+//   var margin = 50;
+//   var duration = 250;
+//
+//   var lineOpacity = "0.25";
+//   var lineOpacityHover = "0.85";
+//   var otherLinesOpacityHover = "0.1";
+//   var lineStroke = "1.5px";
+//   var lineStrokeHover = "2.5px";
+//
+//   var circleOpacity = '0.85';
+//   var circleOpacityOnLineHover = "0.25"
+//   var circleRadius = 3;
+//   var circleRadiusHover = 6;
+//
+//   var svg = d3.selectAll(".lineGraph");
+//   var lines = svg.selectAll(".line-group");
+//   var linee = svg.selectAll(".lines")
+//   var lines_line = lines.selectAll(".line")
+//   var circless = linee.selectAll(".circle-group");
+//   var cir = circless.selectAll(".circle");
+//   var xax = svg.selectAll(".x.axis");
+//   var yax = svg.selectAll(".y.axis");
+//
+//   var xScale = d3.scaleLinear()
+//     .domain(d3.extent(updateData[4].values, d => d.x))
+//     .range([0, width-margin]);
+//
+//   var yScale = d3.scaleLinear()
+//     .domain([0, d3.max(updateData[4].values, d => d.y)])
+//     .range([height-margin, 0]);
+//
+//   /* Add Axis into SVG */
+//   var xAxis = d3.axisBottom(xScale)
+//                   .ticks(5)
+//                   .tickFormat(d3.format("d"));
+//   var yAxis = d3.axisLeft(yScale).ticks(5);
+//
+//   xax.transition()
+//       .duration(750)
+//       .call(xAxis);
+//
+//   yax.transition()
+//       .duration(750)
+//       .call(yAxis);
+//
+//   var update = lines.data(updateData);
+//
+//   update.exit()
+//         .remove()
+//         .enter();
+//
+//   /* Add line into SVG */
+//   var line = d3.line()
+//                 .x(d => xScale(d.x))
+//                 .y(d => yScale(d.y));
+//
+//   update.transition()
+//         .duration(750)
+//           .attr("d", d => line(d.values));
+//
+//   var update2 = lines_line.data(updateData);
+//
+//     update2.exit()
+//             .remove()
+//             .enter();
+//
+//     update2.transition()
+//             .duration(750)
+//             .attr("d", d=>line(d.values))
+//
+//     update3 = circless.data(updateData);
+//     update3.exit()
+//           .remove()
+//           .enter();
+//
+//
+//     update4 = circless.data(d => d.values);
+    // console.log(update4);
+    // update4.exit()
+    //         .remove()
+    //         .enter();
+    //
+    // update4.transition()
+    //         .duration(750)
+    //         .attr("cx", d => xScale(d.x))
+    //         .attr("cy", d => yScale(d.y));
+  // /* Add line into SVG */
+  // var line = d3.line()
+  //   .x(d => xScale(d.x))
+  //   .y(d => yScale(d.y));
+  //
+  // // select all lines
+  // var svg = d3.select("#lineGraphTest");
+  //
+  //
+  // var lines = svg.selectAll("lines")
+  //
+  //     .data(data2);
+  //
+  //   // lines.exit().remove();
+  //
+  //   lines
+  //     .enter()
+  //     .append('path');
+  //
+  //
+  //   lines
+  //     .transition()
+  //     .duration(200).attr('class', 'line')
+  //     .attr('d', function(d){ console.log(d); return line(d.values); })
+  //     .style('stroke', (d, i) => color(i));
+  //
+  //
+  // /* Add Axis into SVG */
+  // var xAxis = d3.axisBottom(xScale).ticks(5).tickFormat(d3.format("d"));
+  // var yAxis = d3.axisLeft(yScale).ticks(5);
+  //
+  //
+  // // set d attribute of line objects to new data
+  // lines
+  //     .attr('d', function(d){console.log(d); return d.values});
+  //
+  //
+  //
+  // lines.selectAll("circle")
+  //     .attr("cx", function(d){
+  //       console.log(d);})
+  //     .attr("cy", d => yScale(console.log(d.y)));
+  //
+  //
+  // svg.select(".x.axis")
+  //     .call(xAxis);
+  //
+  // svg.select(".y.axis")
+  //     .call(yAxis);
 
 
     // lines.selectAll('.line-group')
@@ -369,8 +422,6 @@ function updateLineGraph(){
     //   .text("Total values");
     //
 
-}
-
 function lineGraph2(data){
   var width = 500;
   var height = 300;
@@ -387,40 +438,14 @@ function lineGraph2(data){
   var circleOpacityOnLineHover = "0.25"
   var circleRadius = 3;
   var circleRadiusHover = 6;
-
-  // // Parse the date / time
-  // var parseDate = d3.timeFormat("%Y");
-
-  // parse the date / time
-var parseTime = d3.timeParse("%Y");
-
-  data.forEach(function(d){
-    d.values.forEach(function(d){
-      d.x = parseTime(d.x)
-      console.log(d.x);
-      d.y = +d.y;
-    })
-  });
-  // /* Format Data */
-  // // var parseDate = d3.timeParse("%Y");
-  // data.forEach(function(d) {
-  //   d.values.forEach(function(d) {
-  //     var num = d.x;
-  //     var n = num.toString();
-  //
-  //     console.log();
-  //   });
-  // });
-
-  // var years = ["2015", "2020", "2025", "2030", "2035", "2040", "2045", "2050"]
-  console.log(data.values);
+  console.log(data[2].values);
   /* Scale */
   var xScale = d3.scaleLinear()
-    .domain(d3.extent(data[2].values, d => d.x))
+    .domain(d3.extent(data[4].values, d => d.x))
     .range([0, width-margin]);
 
   var yScale = d3.scaleLinear()
-    .domain([0, d3.max(data[2].values, d => d.y)])
+    .domain([0, d3.max(data[4].values, d => d.y)])
     .range([height-margin, 0]);
 
   var color = d3.scaleOrdinal(d3.schemeCategory10);
@@ -430,6 +455,7 @@ var parseTime = d3.timeParse("%Y");
     .attr("width", (width+margin)+"px")
     .attr("height", (height+margin)+"px")
     .append('g')
+    .attr("id", "lineGraphTest")
     .attr("transform", `translate(${margin}, ${margin})`);
 
 
@@ -438,7 +464,7 @@ var parseTime = d3.timeParse("%Y");
     .x(d => xScale(d.x))
     .y(d => yScale(d.y));
 
-  let lines = svg.append('g')
+  var lines = svg.append('g')
     .attr('class', 'lines');
 
   lines.selectAll('.line-group')
@@ -528,7 +554,7 @@ var parseTime = d3.timeParse("%Y");
 
 
   /* Add Axis into SVG */
-  var xAxis = d3.axisBottom(xScale).ticks(5);
+  var xAxis = d3.axisBottom(xScale).ticks(5).tickFormat(d3.format("d"));
   var yAxis = d3.axisLeft(yScale).ticks(5);
 
   svg.append("g")
@@ -543,6 +569,6 @@ var parseTime = d3.timeParse("%Y");
     .attr("y", 15)
     .attr("transform", "rotate(-90)")
     .attr("fill", "#000")
-    .text("Total values");
-
+    .text("Number of people living with dementia (millions)
+");
 };

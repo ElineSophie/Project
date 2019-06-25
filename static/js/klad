@@ -19,3 +19,14 @@
 //     console.log(d[0]["Perioden"]);;
 // })
 // // console.log(globaldata[1][1]);
+
+
+
+// var button = d3v5.select('input[name="Treatment]:checked').property("value");
+// if(button == "Ongoing"){
+//   var gender = d3v5.select("#Gender1").property("value")
+// }
+// else if(button == "Closed"){
+//   var gender = d3v5.select("#Gender2").property("value")
+// }
+// console.log(button);
