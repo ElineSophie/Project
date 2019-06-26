@@ -89,12 +89,6 @@ padding: 15px;
 .row.content {height:auto;}
 }
 
-.tooltip{
-  position: absolute;
-  background-color: "red";
-  border: 2px solid black;
-}
-
 svg {
     font-family: Sans-Serif, Arial;
 }
@@ -115,34 +109,24 @@ svg {
   font-size: 12px;
 }
 
-.show { display: block; }
-.hide { display: none; }
-
-/* #map {
-  position: relative;
-  left: 20px;
-  background-color: white;
-  border: 1px solid;
-  padding: 10px;
-  box-shadow: 5px 5px 5px #888888;
+.show {
+  display: block;
 }
 
-.scatterplot {
-  position: middle;
-  bottom: 50px;
-  right: -200px;
-  background-color: white;
-  border: 1px solid;
-  padding: 10px;
-  box-shadow: 5px 10px 18px #888888;
+.hide {
+  display: none;
 }
 
-.prognose {
+.reload {
   position: absolute;
-  bottom: 1px;
-  right: -200px;
+  top: 200px;
+  right: 10px;
+  width: 50px;
+  height: 25px;
+  border: 1px solid black;
+}
+.tooltip{
+  position: absolute;
   background-color: white;
-  border: 1px solid;
-  padding: 10px;
-  box-shadow: 5px 10px 18px #888888;
+  border: 1px solid black;
 }

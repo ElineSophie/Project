@@ -5,7 +5,7 @@ var selected_year = 2009
 
 window.onload = function loadData(){
 
-      // Load in data
+    // Load in data
     var requests = [d3v5.json("../../data/netherlands/nld.json"),
     d3v5.json("../../data/netherlands/map.json"),
     d3v5.json("../../data/netherlands/datanetherlands.json"),
@@ -22,10 +22,6 @@ window.onload = function loadData(){
       globaldata.push(res[1]);
         // updateMap();
 
-      // Remove netherlands in dataset
-      for (d in res[2]){
-          res[2][d].shift();
-        };
 
       initScatter(res[2]["2009"]);
 
@@ -87,7 +83,16 @@ window.onload = function loadData(){
 
       })
 
-        console.log(document.getElementById("Gender1").value);
+      //   console.log(document.getElementById("Gender1").value);
+      //
+      //   var year = document.getElementById("year").value;
+      //   console.log(year);
+      // // d3v5.select("#submitButton").on("click", function(d){
+      // //   var year;
+      // //   if (document.getElementById("#year").click){
+      // //     year = document.getElementById("#year").value
+      // //   }
+      // })
 
       d3v5.select("#year")
           .on("change", function(d){
@@ -119,7 +124,7 @@ window.onload = function loadData(){
             };
 
             updateScatter(this.value, gender, age);
-            updateMap(this.value);
+            updateMap(this.value, gender, age);
             updatePie(this.value, res[4]);
           });
 

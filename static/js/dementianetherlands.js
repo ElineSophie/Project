@@ -1,35 +1,32 @@
 function dataMaps(nld, data, dataLine, dataPieChart){
 
-  var provinces = [];
-  Object.keys(data).forEach(function(d){
-    provinces.push(d);
-  })
-
-  console.log(provinces);
   var w = 600;
   var h = 600;
 
-  var colour = d3v3.scale.category20(provinces);
+  // Make usable list for color scaling
+  var calc_data = [];
+  d3v5.max(Object.entries(data), function(d) {
+    Object.values(d[1]).forEach(function(value){
+      if (value.Perioden == selected_year){
+        calc_data.push(value["Totaal aantal lopend"]);
+      }
+    })
+  });
 
-  // var max = -Infinity;
-  // var min = Infinity;
-  //
-  // Object.values(data).forEach(function(key){
-  //   console.log(key[0]);
-  //   if (key[0]["Tot per 100.000 inwoners lopend"] > max){
-  //     max = key[0]["Tot per 100.000 inwoners lopend"]}
-  //   if (key[0]["Tot per 100.000 inwoners lopend"] < min){
-  //     min = key[0]["Tot per 100.000 inwoners lopend"]}
-  // })
-  //
-  // console.log(max);
-  // console.log(min);
-  //
-  // var colour = d3v5.scaleThreshold()
-  //                     .domain([(1/3 * max),
-  //                              (2/3 * max),
-  //                              (max)])
-  //                     .range(['red', 'yellow', 'green']);
+  var min = d3v5.min(calc_data);
+  var max = d3v5.max(calc_data);
+
+  // Set variables for colors
+  var lowest = Math.round((max-min) * (1 / 5));
+  var low = Math.round((max-min) * (2 / 5));
+  var middle = Math.round((max-min) * (3 / 5));
+  var high = Math.round((max-min) * (4 / 5));
+  var highest = Math.round((max-min));
+
+  // Set color scale for circles
+  var colorScale = d3v5.scaleThreshold()
+                      .domain([lowest, low, middle, high, highest])
+                      .range(colorbrewer.Blues[5]);
 
   // Projection of the map
   var projection = d3v3.geo.mercator()
@@ -44,11 +41,11 @@ function dataMaps(nld, data, dataLine, dataPieChart){
       .attr("width", w)
       .attr("height", h);
 
-var tooltip = d3v5.select("body").append("div")
+  var tooltip = d3v5.select("body").append("div")
       .attr("class", "tooltip")
       .style("opacity", 0);
 
-// Create margins and dimensions for the graph
+  // Create margins and dimensions for the graph
   var margin = {top: 20, right: 20, bottom: 80, left: 80};
   var graphWidth = w - margin.left - margin.right;
   var graphHeight = h - margin.top - margin.bottom;
@@ -73,14 +70,20 @@ var tooltip = d3v5.select("body").append("div")
       .data(topojson.feature(nld, nld.objects.subunits).features).enter()
       .append("path")
       .attr("d", path) // List of coordinates
-      .attr("fill", function(d, i) {
-          return colour(i);})
+      .attr("fill", function(d) {
+        if (data[d.properties.name] != undefined) {
+          for (element in data[d.properties.name]){
+            console.log(data[d.properties.name][element]["Totaal aantal lopend"]);
+            if (data[d.properties.name][element]["Perioden"] == selected_year){
+              console.log(data[d.properties.name][element]);
+              return colorScale(data[d.properties.name][element]["Totaal aantal lopend"])
+        }
+      }}})
       .attr("stroke", "black")
       .attr("class", function(d, i) {
           return d.properties.name;
       })
       .on("mouseover", function(d) {
-            // d3v5.select(this).attr("fill", "yellow");
             tooltip.transition()
             .duration(200)
             .style("opacity", .9);
@@ -92,15 +95,13 @@ var tooltip = d3v5.select("body").append("div")
                    return;
                 }})
               // hier kan je de variabele printen die je wilt hebben
-              return "Total per 100.000 inhabitants: " + point["Tot per 100.000 inwoners lopend"]
+              return "Region: " + point.Regios + "<br>Number of people with dementia: " + point["Totaal aantal lopend"]
               // point["Tot per 100.000 inwoners gesloten"]
             })
             .style("left", (d3v5.event.pageX) + "px")
             .style("top", (d3v5.event.pageY - 28) + "px");
           })
-      .on("mouseout", function(d){
-         // d3v5.select("path").attr("fill",function(d, i) {
-         //     return colour(i);});
+      .on("mouseout", function(d, i){
         tooltip.transition()
         .duration(100)
         .style("opacity", 0)
@@ -112,37 +113,15 @@ var tooltip = d3v5.select("body").append("div")
         updateLine(dataLine, d.properties.name)
         updatePie(year, dataPieChart, d.properties.name)
       });
-          // .on("mouseover", function(d) {
-          //   d3v5.select(this).attr("fill", "yellow")
-          // })
-          // // .on("mouseout", function(d){
-          // //   d3v5.select(this).attr("fill", false)
-          // //   });
 
-      // graph.selectAll(".city-circle")
-      //     .data(data)
-      //     .enter()
-      //     .append("circle")
-      //     .attr("r", 2)
-      //     .attr("cx", function(d){
-      //       var coords = projection(d.long, d.lat)
-      //       return coords[0];
-      //     })
-      //     .attr("cy",function(d){
-      //       var coords = projection(d.log, d.lat)
-      //       return coords[1];
-      //     })
-      //     .text("this is text");
-
-      addLegend(colour, data)
+      addLegendMap(colorScale)
 }
 
-function addLegend(colour, data){
 
-  var provinces = [];
-  Object.keys(data).forEach(function(d){
-    provinces.push(d);
-  })
+/*
+This function will add a legend to the map
+*/
+function addLegendMap(color){
 
   legendMarginTop  = 50,
                     legendMarginLeft = 30,
@@ -153,43 +132,45 @@ function addLegend(colour, data){
   var legend = svg.append('g')
       .attr('width', 250)
       .attr('height', 150)
-
       .attr("transform", "translate(" + 30 + "," + 50 + ")");
 
   var legends = legend.selectAll("#map")
-      .data(colour.domain())
+      .data(color.domain())
       .enter().append("g")
       .attr("class", "legend")
       .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
 
   // draw legend colored rectangles
   legends.append("rect")
-      .attr("x", 500)
+      .attr("x", 530)
       .attr("width", 18)
       .attr("height", 18)
-      .style("fill", colour);
+      .style("fill", color);
 
   // draw legend text
   legends.append("text")
-      .attr("x", 250 - 24)
+      .attr("x", 525)
       .attr("y", 9)
       .attr("dy", ".35em")
       .style("text-anchor", "end")
       .text(function(d){ return d});
 };
 
-function updateMap(val, d){
+
+/*
+This function will update the datamap for the years.
+*/
+function updateMap(val, gender, age){
   selected_year = val
 };
 
+
+/*
+This function will draw a scatterplot with default data, namely
+on the x-axis the total ongoing DCT dementia patients and on the y-axis the
+65+ aging rate for men and women in total.
+*/
 function initScatter(data){
-  /*
-  This function will draw a scatterplot with default data, namely
-  on the x-axis the total ongoing DCT dementia patients and on the y-axis the
-  65+ aging rate for men and women in total.
-  */
-
-
 
   //Width and height
   var width = 600;
@@ -233,24 +214,24 @@ function initScatter(data){
                 .range([0, graphWidth])
                 .nice();
 
-  // Set variables for colours
-  var lowest = Math.round(d3v5.max(data, d => d["Totaal aantal lopend"]) * (1/5));
-  var low = Math.round(d3v5.max(data, d => d["Totaal aantal lopend"]) * (2/5));
-  var middle = Math.round(d3v5.max(data, d => d["Totaal aantal lopend"]) * (3/5));
-  var high = Math.round(d3v5.max(data, d => d["Totaal aantal lopend"]) * (4/5));
-  var highest = Math.round(d3v5.max(data, d => d["Totaal aantal lopend"]));
+  var min = d3v5.min(data, d => d["Totaal aantal lopend"]);
+  var max = d3v5.max(data, d => d["Totaal aantal lopend"]);
+
+  // Set variables for colors
+  var lowest = Math.round((max-min) * (1 / 5));
+  var low = Math.round((max-min) * (2 / 5));
+  var middle = Math.round((max-min) * (3 / 5));
+  var high = Math.round((max-min) * (4 / 5));
+  var highest = Math.round((max-min));
 
   // Set color scale for circles
   var colorScale = d3v5.scaleThreshold()
                       .domain([lowest, low, middle, high, highest])
                       .range(colorbrewer.Blues[5]);
 
-  var tip = d3v5.select('.svg_scatter')
-    .append('text')
-    .attr('class', 'tip')
-    .html(function(d){
-      return "";
-    });
+  var tooltip = d3v5.select('.scatter')
+    .append('div')
+    .attr('class', 'tooltip');
 
   // Create circles
   var dot = graph.selectAll("circle")
@@ -259,28 +240,33 @@ function initScatter(data){
   dot.enter()
       .append("circle")
       .attr("class", "dot")
-      .attr("r", "5")
+      .attr("r", "10")
       .attr("cx", d => xScale(d["Totaal aantal lopend"]))
       .attr("cy", d => yScale(d["65+ totaal"]))
       .attr("fill", d => colorScale(d["Totaal aantal lopend"]))
       // .append("g")
       // .class("")
       .on('mouseover', function(d, i) {
-
+        tooltip.transition()
+        .duration(0)
+        .style("opacity", .9);
         // console.log(d["65+ totaal"]);
         // tip.transition().duration(750);
         // tip.style('top', yScale(d["65+ totaal"]) - 20 + 'px');
         // tip.style('left', xScale(d["Totaal aantal lopend"]) + 'px');
-        tip.style('display', 'block')
-        tip.attr("x", xScale(d["Totaal aantal lopend"]))
-        tip.attr("y", yScale(d["65+ totaal"]))
-        tip.html("<tspan x='0' dy='1.2em'> Province: " + d.Regios + "</tspan>" + "<tspan x='0' dy='1.2em'> Total dementia patient: " + d["Totaal aantal lopend"] +
-        "</tspan> Aging rate: " + d["65+ totaal"])
-      })
+        tooltip.style("left", (d3v5.event.pageX) + "px")
+        tooltip.style("top", (d3v5.event.pageY) + "px")
+        tooltip.html(function(){
+           return "Province: " + d.Regios + "<br>Total dementia patient: " + d["Totaal aantal lopend"] +
+           "<br>Aging rate: " + d["65+ totaal"];
+        });
+        })
       .on('mouseout', function(d, i) {
-        tip.transition()
-        .delay(500)
-        .style('display', 'none');
+        tooltip.transition()
+        .duration(0)
+        .style("opacity", 0)
+        .style("left", (d3v5.event.pageX) + "px")
+        .style("top", (d3v5.event.pageY + 10) + "px");
       });
 
 
@@ -292,8 +278,6 @@ function initScatter(data){
     yAxis.call(y);
 
     // Add text to the graph
-
-
     svg_scatterplot.append("text")
                     .attr("x", width / 2.5)
                     .attr("y", 0 + 20)
@@ -309,10 +293,53 @@ function initScatter(data){
   svg_scatterplot.append("text")
   .attr("x", width / 2)
   .attr("y", 530)
-  .text("Number of people with dementia")
+  .text("Number of people with dementia");
+
+  addLegendScatter(colorScale);
 
 };
 
+
+function addLegendScatter(color){
+
+  var legendMarginTop  = 50;
+  var legendMarginLeft = 30;
+  var legendWidth  = 250;
+  var legendHeight = 150;
+
+  var svg = d3v5.selectAll(".scatterplot")
+
+  var legend = svg.append('g')
+      .attr('width', 250)
+      .attr('height', 150)
+      .attr("transform", "translate(" + 30 + "," + 50 + ")");
+
+  var legends = legend.selectAll(".scatterplot")
+      .data(color.domain())
+      .enter().append("g")
+      .attr("class", "legend")
+      .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+  // draw legend colored rectangles
+  legends.append("rect")
+      .attr("x", 530)
+      .attr("width", 18)
+      .attr("height", 18)
+      .style("fill", color);
+
+  // draw legend text
+  legends.append("text")
+      .attr("x", 525)
+      .attr("y", 9)
+      .attr("dy", ".35em")
+      .style("text-anchor", "end")
+      .text(function(d){ return d});
+}
+
+/*
+This function will update the scatterplot with new data, according to the menu's
+that the use can click on.
+*/
 function updateScatter(val, gender, age, data = globaldata[0]){
 
   var svg_scatterplot = d3v5.selectAll(".scatterplot");
@@ -340,7 +367,7 @@ function updateScatter(val, gender, age, data = globaldata[0]){
                 .range([0, graphWidth])
                 .nice();
 
-  // Set variables for colours
+  // Set variables for colors
   var lowest = Math.round(d3v5.max(data, d => d["Totaal aantal lopend"]) * (1/5));
   var low = Math.round(d3v5.max(data, d => d["Totaal aantal lopend"]) * (2/5));
   var middle = Math.round(d3v5.max(data, d => d["Totaal aantal lopend"]) * (3/5));
@@ -352,7 +379,7 @@ function updateScatter(val, gender, age, data = globaldata[0]){
                       .domain([lowest, low, middle, high, highest])
                       .range(colorbrewer.Blues[5]);
 
- update_title = svg_scatterplot.selectAll("title")
+ update_title = svg_scatterplot.selectAll(".title")
                     .text("Scatterplot for year " + val);
 
   // Join new data
@@ -361,28 +388,40 @@ function updateScatter(val, gender, age, data = globaldata[0]){
 
   var tip = graph.selectAll("tip");
 
-    dot.exit()
+  dot.exit()
       .remove()
       .enter()
 
   dot.transition()
-    .attr("cx", function(d){
-      return xScale(d[gender]);})
-    .attr("cy", function(d){
-      console.log(d[age]);
-      return yScale(d[age]);});
+      .attr("cx", function(d){
+        return xScale(d[gender]);})
+      .attr("cy", function(d){
+        return yScale(d[age]);});
 
-    // Create and call the axes
-    var x = d3v5.axisBottom(xScale);
-    var y = d3v5.axisLeft(yScale);
+  var tooltip = dot.selectAll(".tooltip");
 
-    xAxis.call(x);
-    yAxis.call(y);
+  tooltip.html(function(){
+     return "Province: " + d.Regios + "<br>Total dementia patient: " + d[gender] +
+     "<br>Aging rate: " + d[age];
+  });
+
+  // Create and call the axes
+  var x = d3v5.axisBottom(xScale);
+  var y = d3v5.axisLeft(yScale);
+
+  xAxis.call(x);
+  yAxis.call(y);
 
 };
 
+
+/*
+This function will create a line chart with default Netherlands. When hovering
+over the lines, the values and name of the regios will show up.
+*/
 function initLine(data){
 
+  console.log(data);
   var initData;
 
   Object.values(data).forEach(function(value){
@@ -487,7 +526,7 @@ function initLine(data){
           .style("cursor", "pointer")
           .append("text")
           .attr("class", "text")
-          .text(`${d.y / 1000}`)
+          .text(`${d.y}`)
           .attr("x", d => xScale(d.x) + 5)
           .attr("y", d => yScale(d.y) - 10)
       })
@@ -518,13 +557,13 @@ function initLine(data){
             .attr("r", circleRadius);
         });
 
-
-  /* Add Axis into SVG */
+  // Add axis
   var xAxis = d3v5.axisBottom(xScale)
                   .ticks(5)
                   .tickFormat(d3v5.format("d"));
   var yAxis = d3v5.axisLeft(yScale).ticks(5);
 
+  // Add text
   svg.append("g")
     .attr("class", "x-axis")
     .attr("transform", `translate(0, ${height-margin})`)
@@ -538,7 +577,7 @@ function initLine(data){
       .attr("x", width / 3)
       .attr("h", 10)
       .attr("class", "titleScatter")
-      .text("Prognose for " + data.name)
+      .text("Prognose for " + initData[0].name)
 
   svg.append('text')
     .attr("x", -260)
@@ -552,6 +591,10 @@ function initLine(data){
       .text("Years");
 };
 
+
+/*
+This function will update the line chart for each province.
+*/
 function updateLine(data, province){
 
   var updateData;
@@ -565,7 +608,7 @@ function updateLine(data, province){
 
   var width = 500;
   var height = 400;
-  var margin = 50;
+  var margin = 80;
 
   var duration = 250;
 
@@ -654,8 +697,16 @@ function updateLine(data, province){
           .duration(750)
           .attr("cx", d => xScale(d.x))
           .attr("cy", d => yScale(d.y));
+
+  updateTitle = svg.select(".titleScatter")
+                    .text("Prognose for " + updateData[0].name)
 };
 
+
+/*
+This function will create a pie chart with default Netherland, for the different age categories. When
+hovering over the different parts, the prevalence for each group will be seen.
+*/
 function initPiechart(data){
 
   var initData;
@@ -698,20 +749,17 @@ function initPiechart(data){
        .attr("transform", "translate(" + width / 1.8 + "," + height / 1.7 + ")");
 
    // set the color scale
-   var color = d3v5.scaleOrdinal()
-     .domain(data_use[0])
-     .range(["green", "blue", "yellow", "orange", "lightblue"])
+   var colorScale = d3v5.scaleOrdinal()
+                         .domain(data_use[0])
+                         .range(colorbrewer.Blues[5]);
 
-   var tip = d3v5.select('.pie')
-     .append('text')
-     .attr('class', 'tip')
-     .html(function(d){
-       return "";
-     });
+   var tooltip = d3v5.select('.pie')
+                     .append('div')
+                     .attr('class', 'tooltip');
 
    // Compute the position of each group on the pie:
    var pie = d3v5.pie()
-     .value(function(d) {return d.value; })
+                  .value(function(d) {return d.value; })
    var data_ready = pie(d3v5.entries(data_use[0]))
 
    // Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
@@ -725,20 +773,28 @@ function initPiechart(data){
        .innerRadius(0)
        .outerRadius(radius)
      )
-     .attr('fill', function(d){ return(color(d.data.key)) })
+     .attr('fill', function(d){ return(colorScale(d.data.key)) })
      .attr("stroke", "black")
      .style("stroke-width", "2px")
      .style("opacity", 0.7)
      .on('mouseover', function(d, i) {
-       tip.style('display', 'block')
-       tip.style("left", (d3v5.event.pageX) + "px")
-       tip.style("top", (d3v5.event.pageY - 28) + "px")
-       tip.html("Hello")
+       // tip.style('display', 'block')
+       // d3v5.select(this).attr("fill", "yellow");
+       tooltip.transition()
+       .duration(200)
+       .style("opacity", .9);
+       tooltip.style("left", (d3v5.event.pageX) + "px")
+       tooltip.style("top", (d3v5.event.pageY) + "px")
+       tooltip.html(function(){
+          return "Leeftijd: " + d.data.key + "<br> Aantal: " + d.data.value + "</br>";
+       });
      })
      .on('mouseout', function(d, i) {
-       tip.transition()
-       .delay(50)
-       .style('display', 'none');
+       tooltip.transition()
+       .duration(100)
+       .style("opacity", 0)
+       .style("left", (d3v5.event.pageX) + "px")
+       .style("top", (d3v5.event.pageY - 28) + "px");
      });
 
    svg.append("text")
@@ -746,9 +802,57 @@ function initPiechart(data){
        .attr("x", -40)
        .attr("y", 0 - 200)
        .text("Pie chart: " + initName)
+
+    addLegendPie(colorScale)
 }
 
+
+/*
+This function will create a legend for the pie chart.
+*/
+function addLegendPie(color){
+
+  legendMarginTop  = 50,
+                    legendMarginLeft = 30,
+                    legendWidth  = 250,
+                    legendHeight = 150;
+
+  var svg = d3v5.selectAll(".pie")
+
+  var legend = svg.append('g')
+      .attr('width', 250)
+      .attr('height', 150)
+      .attr("transform", "translate(" + 30 + "," + 50 + ")");
+
+  var legends = legend.selectAll(".pie")
+      .data(color.domain())
+      .enter().append("g")
+      .attr("class", "legend")
+      .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+  // draw legend colored rectangles
+  legends.append("rect")
+      .attr("x", 100)
+      .attr("width", 18)
+      .attr("height", 18)
+      .style("fill", color);
+
+  // // draw legend text
+  // legends.append("text")
+  //     .attr("x", 525)
+  //     .attr("y", 9)
+  //     .attr("dy", ".35em")
+  //     .style("text-anchor", "end")
+  //     .text(function(d){ return d});
+};
+
+
+/*
+This function will update the pie chart for each province when clicked on
+the province in the map.
+*/
 function updatePie(year, data, provinces = "Nederland"){
+
   var initData;
   var initName;
 
@@ -758,6 +862,7 @@ function updatePie(year, data, provinces = "Nederland"){
       initName = value.Regios
     }
   });
+
   // Create array of objects of search results to be used by D3
    var data_use = [];
    for(var key in initData) {
@@ -782,35 +887,41 @@ function updatePie(year, data, provinces = "Nederland"){
    var svg = d3v5.select("svg_pie")
                   .data(initData);
 
-    // set the color scale
-    var color = d3v5.scaleOrdinal()
-      .domain(data_use[0])
-      .range(["green", "blue", "yellow", "orange", "lightblue"]);
+  // set the color scale
+  var colorScale = d3v5.scaleOrdinal()
+                        .domain(data_use[0])
+                        .range(colorbrewer.Blues[5]);
 
-    // Compute the position of each group on the pie:
-    var pie = d3v5.pie()
-      .value(function(d) {return d.value; })
-    var dataUpdate = pie(d3v5.entries(data_use[0]))
+  // Compute the position of each group on the pie:
+  var pie = d3v5.pie()
+                .value(function(d) {return d.value; })
 
-    var updatePie = d3v5.selectAll("#pathPie").data(dataUpdate);
+  var dataUpdate = pie(d3v5.entries(data_use[0]))
 
-    updatePie.exit()
-            .remove()
-            .enter();
+  var updatePie = d3v5.selectAll("#pathPie").data(dataUpdate);
 
-    updatePie.transition()
-              .duration(750)
-              .attr('d', d3v5.arc()
-                .innerRadius(0)
-                .outerRadius(radius)
-              )
-              .attr('fill', function(d){ return(color(d.data.key)) })
+  updatePie.exit()
+          .remove()
+          .enter();
 
-  updateText = svg.selectAll(".titlePie");
+  updatePie.transition()
+            .duration(750)
+            .attr('d', d3v5.arc()
+              .innerRadius(0)
+              .outerRadius(radius)
+            )
+            .attr('fill', function(d){ return(colorScale(d.data.key)) })
 
-  updateText.text("Pie chart: " + initName)
+
+  updateText = svg.selectAll(".titlePie")
+                  .text("Pie chart: " + initName);
+
 }
 
+
+/*
+These functions will act on the radio buttons/dropdown menus.
+*/
 function showSelect() {
     var select = document.getElementById('Gender1');
     select.className = 'show';
@@ -829,3 +940,11 @@ function showSelectYear(){
   var select = document.getElementById('year');
   select.className = 'show';
 };
+
+
+/*
+This function will reload the page.
+*/
+function reload(){
+  location.reload();
+}

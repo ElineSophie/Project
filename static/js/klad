@@ -30,3 +30,30 @@
 //   var gender = d3v5.select("#Gender2").property("value")
 // }
 // console.log(button);
+
+
+
+
+  // var provinces = [];
+  // Object.keys(data).forEach(function(d){
+  //   provinces.push(d);
+  // })
+  // Object.values(data_color).forEach(function(d){
+  //   provinces.push(d.properties.name)
+  // });
+  //
+  // // Remove the first row (undefined)
+  // provinces.shift();
+  //
+  //
+  // Object.values(provinces).forEach(function(d){
+  //   data[provinces].forEach(period=>{
+  //     if (period.Perioden == selected_year) {
+  //        point = period
+  //        return;
+  //     }})
+  // })
+    // period=>{
+    // if (period.Perioden == selected_year) {
+    //   console.log(period);
+    // }})
