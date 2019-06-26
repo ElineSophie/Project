@@ -14,16 +14,11 @@ window.onload = function loadData(){
     Promise.all(requests).then(function(res) {
 
       dataMaps(res[0], res[1], res[3], res[4])
-      //
-      keys = Object.keys(res[2])
-      values = Object.values(res[2])
 
       globaldata.push(res[2]);
       globaldata.push(res[1]);
-        // updateMap();
 
-
-      initScatter(res[2]["2009"]);
+      initScatter(res[2]["2009"], res[3], res[4]);
 
       d3v5.select("#Gender1").on("change", function(d){
         if("Totaal aantal lopend" == this.value){
@@ -79,21 +74,6 @@ window.onload = function loadData(){
         }
       })
 
-      d3v5.select("#ChoiceName").on("click", function(d){
-
-      })
-
-      //   console.log(document.getElementById("Gender1").value);
-      //
-      //   var year = document.getElementById("year").value;
-      //   console.log(year);
-      // // d3v5.select("#submitButton").on("click", function(d){
-      // //   var year;
-      // //   if (document.getElementById("#year").click){
-      // //     year = document.getElementById("#year").value
-      // //   }
-      // })
-
       d3v5.select("#year")
           .on("change", function(d){
             var gender;
@@ -122,9 +102,8 @@ window.onload = function loadData(){
             else if (document.getElementById("Gender2").value == "Totaal aantal vrouwen gesloten"){
               age = document.getElementById("AgeWomen").value;
             };
-
             updateScatter(this.value, gender, age);
-            updateMap(this.value, gender, age);
+            updateMap(this.value, res[0], res[1], gender, age);
             updatePie(this.value, res[4]);
           });
 

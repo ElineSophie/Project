@@ -1,3 +1,36 @@
+# Programming Project - A visualisation of dementia
+Course: Programmeerproject  
+Name: Sophie Schubert  
+Student number: 10699988
+
+## [GitHub Pages](https://ElineSophie.github.io/Project/)  
+
+## Product Goal  
+Dementia is a global problem. According to various prognoses, the number of dementia patients will increase to a large extent. For this increase, different reasons are given. One main reason is the aging population.
+The idea for this project is to provide information about the disease and the impact worldwide. On the other hand, information will be given
+about the rates of dementia in the Netherlands in relationship with aging population. The number of people with dementia are shown in a map of the Netherlands and also in a scatterplot, against aging rates. Thereby, a prognosis is given for each province till 2050.
+
+## Website Walkthrough  
+#### Homepage  
+The website consists of a main homepage that shows the navigation bar at the top of the page, followed by the title of my project and information about my webpage and contactinfo, all projected on an image. The navigation bar contains the links to other pages of the website.
+
+![](doc/homepage.png)  
+
+#### Introduction page
+
+#### Visualisation page about the types of dementia
+
+#### Visualisation page about the Netherlands and dementia
+
+## Sources  
+#### Data Sources  
+
+#### Code Sources  
+
+#### D3 Plugins  
+
+#### Images
+
 # Programming Project - Number of dementia cases in the Netherlands
 
 Github Link: https://ElineSophie.github.io/Project/

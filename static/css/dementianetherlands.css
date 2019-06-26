@@ -14,7 +14,7 @@ body{
 * {box-sizing: border-box;}
 .wrapper {
   width: 956px;
-  padding: 35px 95px;
+  padding: 10px 10px;
   margin: 10px;
 }
 .wrapper > div {
@@ -27,8 +27,8 @@ body{
   display: grid;
   grid-template-columns: repeat(10px 10px);
   grid-gap: 5px;
-  grid-auto-rows: minmax(50px, auto);
-  grid-column-end: 1;
+  grid-auto-rows: minmax(40px, auto);
+  grid-column-end: 0.5;
 }
 .explain {
   grid-column: 2 / 3;
@@ -59,36 +59,6 @@ body{
   grid-row: 4 / 6;
 }
 
-
-/* Set height of the grid so .sidenav can be 100% (adjust as needed) */
-.row.content {height: 100%;
-background-color: pink;
-}
-
-/* Set gray background color and 100% height */
-.sidenav {
-padding-top: 20px;
-background-color: #f1f1f1;
-width: 100%
-height: 2000px;
-}
-
-/* Set black background color, white text and some padding */
-footer {
-background-color: #555;
-color: white;
-padding: 15px;
-}
-
-/* On small screens, set height to 'auto' for sidenav and grid */
-@media screen and (max-width: 100%) {
-.sidenav {
-  height: auto;
-  padding: 15px;
-}
-.row.content {height:auto;}
-}
-
 svg {
     font-family: Sans-Serif, Arial;
 }
@@ -96,13 +66,12 @@ svg {
   stroke-width: 2;
   fill: none;
 }
-
 .axis path {
   stroke: black;
 }
 
 .text {
-  font-size: 12px;
+  font-size: 15px;
 }
 
 .title-text {
@@ -118,13 +87,12 @@ svg {
 }
 
 .reload {
-  position: absolute;
-  top: 200px;
-  right: 10px;
+  position: static;
   width: 50px;
   height: 25px;
   border: 1px solid black;
 }
+
 .tooltip{
   position: absolute;
   background-color: white;
