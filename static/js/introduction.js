@@ -22,6 +22,10 @@ window.onload = function loadData(){
 
   };
 
+
+/*
+This function draw a line graph according to income
+*/
 function lineGraph(data){
 
   d3.selectAll("svg")
@@ -181,6 +185,10 @@ function lineGraph(data){
       .text("Number of people living with dementia (in millions)");
 };
 
+
+/*
+This function draw a line graph according to region
+*/
 function lineGraph2(data){
 
   d3.selectAll("svg")
