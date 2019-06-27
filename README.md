@@ -48,7 +48,7 @@ The line graph give information about the prognosis, with number of people with 
 ![](doc/pieprog.PNG)  
 
 All the visualisations together on a page with zoom-in 100% is not possible. To see all the visualisation on one page without scrolling to the right, left and below, it is necessary to zoom-out. This gives also a better view about the linked visualisations.
-![](doc/AgingNetherlands.PNG)  
+![](doc/agingnetherlands.PNG)  
 
 ## Prerequisites  
 
