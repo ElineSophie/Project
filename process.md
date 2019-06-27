@@ -107,4 +107,11 @@ Daarnaast moet ik ook nog een legenda maken voor mijn datamap. Ik heb de keuze o
 
 De scatterplot bevat nu een colorscale, waardoor het nu mogelijk is om een legenda te maken. De legenda geeft lowest to highest dementia rates weer, wat voor elk menu kan veranderen. In de scatterplot kan je dan ook goed zien of er een relatie/correlatie is tussen vergrijzing en dementie cijfers voor elke provincie.
 
-Alle grafieken hebben nu ook titels en astitels. Echter moet er nog wel een update worden gedaan voor enkele titels. 
+Alle grafieken hebben nu ook titels en astitels. Echter moet er nog wel een update worden gedaan voor enkele titels.
+
+__25-06-2019__
+---
+Vandaag heb ik alle alle legenda's en kleuren gemaakt voor de map, scatterplot en piechart. Daarnaast heb ik mijn hele website mooier gemaakt met tekst en informatieve links.
+
+Waar ik later achterkwam:
+- Ik kon eigenlijk niet echt de data met elkaar vergelijken, omdat ik populatiedichtheid niet had meegenomen in mijn verhaal. Nu was het inderdaad zo dat alleen Noord-Holland een hoog aantal mensen met dementie hadden, in vergelijking met alle andere provincies. Echter kan dit in vergelijking met de populatiedichtheid misschien niet kloppen. Daarom heb ik alle variabelen verandert in het aantal dementie patienten per 100.000 inwoners. Dit schets een beter beeld. 

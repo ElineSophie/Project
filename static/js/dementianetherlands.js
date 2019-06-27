@@ -11,7 +11,7 @@ function dataMaps(nld, data, dataLine, dataPieChart){
   d3v5.max(Object.entries(data), function(d) {
     Object.values(d[1]).forEach(function(value){
       if (value.Perioden == selected_year){
-        calc_data.push(value["Totaal aantal lopend"]);
+        calc_data.push(value["Tot per 100.000 inwoners lopend"]);
       }
     })
   });
@@ -20,15 +20,13 @@ function dataMaps(nld, data, dataLine, dataPieChart){
   var max = d3v5.max(calc_data);
 
   // Set variables for colors
-  var lowest = Math.round((max-min) * (1 / 5));
-  var low = Math.round((max-min) * (2 / 5));
-  var middle = Math.round((max-min) * (3 / 5));
-  var high = Math.round((max-min) * (4 / 5));
-  var highest = Math.round((max-min));
+  var low = Math.round((max-min) * (1 / 3));
+  var middle = Math.round((max-min) * (2 / 3));
+  var high = Math.round((max-min));
 
   // Set color scale for circles
   var colorScale = d3v5.scaleThreshold()
-                        .domain([lowest, low, middle, high, highest])
+                        .domain([low, middle, high])
                         .range(colorbrewer.Blues[5]);
 
   // Projection of the map
@@ -78,7 +76,7 @@ function dataMaps(nld, data, dataLine, dataPieChart){
           if (data[d.properties.name] != undefined) {
             for (element in data[d.properties.name]){
               if (data[d.properties.name][element]["Perioden"] == selected_year){
-                return colorScale(data[d.properties.name][element]["Totaal aantal lopend"])
+                return colorScale(data[d.properties.name][element]["Tot per 100.000 inwoners lopend"])
           }
         }}})
         .attr("stroke", "black")
@@ -97,7 +95,7 @@ function dataMaps(nld, data, dataLine, dataPieChart){
                      return;
                   }})
                 // hier kan je de variabele printen die je wilt hebben
-                return "Region: " + point.Regios + "<br>Number of people with dementia: " + point["Totaal aantal lopend"]
+                return "Region: " + point.Regios + "<br>Number of people with dementia: " + point["Tot per 100.000 inwoners lopend"]
                 // point["Tot per 100.000 inwoners gesloten"]
               })
               .style("left", (d3v5.event.pageX) + "px")
@@ -161,19 +159,13 @@ function addLegendMap(color, labels){
       .style("font-size", 12)
       .text(function(d, i){
         if (i == 0){
-          return "Lowest"
-        }
-        if (i == 1){
           return "Low"
         }
-        if (i == 2){
+        if (i == 1){
           return "Middle"
         }
-        if (i == 3){
+        if (i == 2){
           return "High"
-        }
-        if (i == 4){
-          return "Highest"
         }
       });
 };
@@ -199,15 +191,13 @@ function updateMap(val, nld, data, gender, age){
   var max = d3v5.max(calc_data);
 
   // Set variables for colors
-  var lowest = Math.round((max-min) * (1 / 5));
-  var low = Math.round((max-min) * (2 / 5));
-  var middle = Math.round((max-min) * (3 / 5));
-  var high = Math.round((max-min) * (4 / 5));
-  var highest = Math.round((max-min));
+  var low = Math.round((max-min) * (1 / 3));
+  var middle = Math.round((max-min) * (2 / 3));
+  var high = Math.round((max-min));
 
   // Set color scale for circles
   var colorScale = d3v5.scaleThreshold()
-                        .domain([lowest, low, middle, high, highest])
+                        .domain([low, middle, high])
                         .range(colorbrewer.Blues[5]);
 
   var graph = d3v5.selectAll("#mapspath")
@@ -274,23 +264,21 @@ function initScatter(data, dataLine, dataPieChart){
                 .nice();
 
   var xScale = d3v5.scaleLinear()
-                .domain([d3v5.min(data, d => d["Totaal aantal lopend"]), d3v5.max(data, d => d["Totaal aantal lopend"])])
+                .domain([d3v5.min(data, d => d["Tot per 100.000 inwoners lopend"]), d3v5.max(data, d => d["Tot per 100.000 inwoners lopend"])])
                 .range([0, graphWidth])
                 .nice();
 
-  var min = d3v5.min(data, d => d["Totaal aantal lopend"]);
-  var max = d3v5.max(data, d => d["Totaal aantal lopend"]);
+  var min = d3v5.min(data, d => d["Tot per 100.000 inwoners lopend"]);
+  var max = d3v5.max(data, d => d["Tot per 100.000 inwoners lopend"]);
 
   // Set variables for colors
-  var lowest = Math.round((max-min) * (1 / 5));
-  var low = Math.round((max-min) * (2 / 5));
-  var middle = Math.round((max-min) * (3 / 5));
-  var high = Math.round((max-min) * (4 / 5));
-  var highest = Math.round((max-min));
+  var low = Math.round((max-min) * (1 / 3));
+  var middle = Math.round((max-min) * (2 / 3));
+  var high = Math.round((max-min));
 
   // Set color scale for circles
   var colorScale = d3v5.scaleThreshold()
-                      .domain([lowest, low, middle, high, highest])
+                      .domain([low, middle, high])
                       .range(colorbrewer.Blues[5]);
 
   var tooltip = d3v5.select('.scatter')
@@ -305,9 +293,9 @@ function initScatter(data, dataLine, dataPieChart){
       .append("circle")
       .attr("class", "dot")
       .attr("r", "10")
-      .attr("cx", d => xScale(d["Totaal aantal lopend"]))
+      .attr("cx", d => xScale(d["Tot per 100.000 inwoners lopend"]))
       .attr("cy", d => yScale(d["65+ totaal"]))
-      .attr("fill", d => colorScale(d["Totaal aantal lopend"]))
+      .attr("fill", d => colorScale(d["Tot per 100.000 inwoners lopend"]))
       .on('mouseover', function(d, i) {
         tooltip.transition()
         .duration(0)
@@ -315,7 +303,7 @@ function initScatter(data, dataLine, dataPieChart){
         tooltip.style("left", (d3v5.event.pageX) + "px")
         tooltip.style("top", (d3v5.event.pageY) + "px")
         tooltip.html(function(){
-           return "Province: " + d.Regios + "<br>Total dementia patient: " + d["Totaal aantal lopend"] +
+           return "Province: " + d.Regios + "<br>Total dementia patient: " + d["Tot per 100.000 inwoners lopend"] +
            "<br>Aging rate: " + d["65+ totaal"];
         });
         })
@@ -398,19 +386,13 @@ function addLegendScatter(color){
       .style("font-size", 12)
       .text(function(d, i){
         if (i == 0){
-          return "Lowest"
-        }
-        if (i == 1){
           return "Low"
         }
-        if (i == 2){
+        if (i == 1){
           return "Middle"
         }
-        if (i == 3){
+        if (i == 2){
           return "High"
-        }
-        if (i == 4){
-          return "Highest"
         }
         });
 }
@@ -447,15 +429,13 @@ function updateScatter(val, gender, age, data = globaldata[0]){
                 .nice();
 
   // Set variables for colors
-  var lowest = Math.round(d3v5.max(data, d => d["Totaal aantal lopend"]) * (1/5));
-  var low = Math.round(d3v5.max(data, d => d["Totaal aantal lopend"]) * (2/5));
-  var middle = Math.round(d3v5.max(data, d => d["Totaal aantal lopend"]) * (3/5));
-  var high = Math.round(d3v5.max(data, d => d["Totaal aantal lopend"]) * (4/5));
-  var highest = Math.round(d3v5.max(data, d => d["Totaal aantal lopend"]));
+  var low = Math.round(d3v5.max(data, d => d["Tot per 100.000 inwoners lopend"]) * (1/3));
+  var middle = Math.round(d3v5.max(data, d => d["Tot per 100.000 inwoners lopend"]) * (2/3));
+  var high = Math.round(d3v5.max(data, d => d["Tot per 100.000 inwoners lopend"]));
 
   // Set color scale for circles
   var colorScale = d3v5.scaleThreshold()
-                      .domain([lowest, low, middle, high, highest])
+                      .domain([low, middle, high])
                       .range(colorbrewer.Blues[5]);
 
  update_title = svg_scatterplot.selectAll(".title")
@@ -927,7 +907,7 @@ This function will update the pie chart for each province when clicked on
 the province in the map.
 */
 function updatePie(year, data, provinces = "Nederland"){
-  
+
   var initData;
   var initName;
 

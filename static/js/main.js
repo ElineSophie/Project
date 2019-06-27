@@ -21,7 +21,7 @@ window.onload = function loadData(){
       initScatter(res[2]["2009"], res[3], res[4]);
 
       d3v5.select("#Gender1").on("change", function(d){
-        if("Totaal aantal lopend" == this.value){
+        if("Tot per 100.000 inwoners lopend" == this.value){
           var select = document.getElementById("AgeTot");
           select.className = "show";
           var hide1 = document.getElementById("AgeMen");
@@ -29,7 +29,7 @@ window.onload = function loadData(){
           var hide2 = document.getElementById("AgeWomen");
           hide2.className = "hide";
         }
-        else if ("Totaal aantal mannen lopend" == this.value){
+        else if ("Tot per 100.000 inwoners mannen lopend" == this.value){
           var select = document.getElementById("AgeMen");
           select.className = "show"
           var hide1 = document.getElementById("AgeTot");
@@ -37,7 +37,7 @@ window.onload = function loadData(){
           var hide2 = document.getElementById("AgeWomen");
           hide2.className = "hide";
         }
-        else if ("Totaal aantal vrouwen lopend" == this.value){
+        else if ("Tot per 100.000 inwoners vrouwen lopend" == this.value){
           var select = document.getElementById("AgeWomen");
           select.className = "show"
           var hide1 = document.getElementById("AgeTot");
@@ -48,7 +48,7 @@ window.onload = function loadData(){
       })
 
       d3v5.select("#Gender2").on("change", function(d){
-        if("Totaal aantal gesloten" == this.value){
+        if("Tot per 100.000 inwoners gesloten" == this.value){
           var select = document.getElementById("AgeTot");
           select.className = "show";
           var hide1 = document.getElementById("AgeMen");
@@ -56,7 +56,7 @@ window.onload = function loadData(){
           var hide2 = document.getElementById("AgeWomen");
           hide2.className = "hide";
         }
-        else if ("Totaal aantal mannen gesloten" == this.value){
+        else if ("Tot per 100.000 inwoners mannen gesloten" == this.value){
           var select = document.getElementById("AgeMen");
           select.className = "show"
           var hide1 = document.getElementById("AgeTot");
@@ -64,7 +64,7 @@ window.onload = function loadData(){
           var hide2 = document.getElementById("AgeWomen");
           hide2.className = "hide";
         }
-        else if ("Totaal aantal vrouwen gesloten" == this.value){
+        else if ("Tot per 100.000 inwoners vrouwen gesloten" == this.value){
           var select = document.getElementById("AgeWomen");
           select.className = "show"
           var hide1 = document.getElementById("AgeTot");
@@ -84,22 +84,22 @@ window.onload = function loadData(){
               gender = document.getElementById("Gender2").value;
             }
             var age;
-            if (document.getElementById("Gender1").value == "Totaal aantal lopend"){
+            if (document.getElementById("Gender1").value == "Tot per 100.000 inwoners lopend"){
               age = document.getElementById("AgeTot").value;
             }
-            else if (document.getElementById("Gender1").value == "Totaal aantal mannen lopend"){
+            else if (document.getElementById("Gender1").value == "Tot per 100.000 inwoners mannen gesloten"){
               age = document.getElementById("AgeMen").value;
             }
-            else if (document.getElementById("Gender1").value == "Totaal aantal vrouwen lopend"){
+            else if (document.getElementById("Gender1").value == "Tot per 100.000 inwoners vrouwen lopend"){
               age = document.getElementById("AgeWomen").value;
             }
-            else if (document.getElementById("Gender2").value == "Totaal aantal gesloten"){
+            else if (document.getElementById("Gender2").value == "Tot per 100.000 inwoners gesloten"){
               age = document.getElementById("AgeTot").value;
             }
-            else if (document.getElementById("Gender2").value == "Totaal aantal mannen gesloten"){
+            else if (document.getElementById("Gender2").value == "Tot per 100.000 inwoners mannen gesloten"){
               age = document.getElementById("AgeMen").value;
             }
-            else if (document.getElementById("Gender2").value == "Totaal aantal vrouwen gesloten"){
+            else if (document.getElementById("Gender2").value == "Tot per 100.000 inwoners vrouwen"){
               age = document.getElementById("AgeWomen").value;
             };
             updateScatter(this.value, gender, age);
