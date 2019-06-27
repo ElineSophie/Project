@@ -95,7 +95,7 @@ function dataMaps(nld, data, dataLine, dataPieChart){
                      return;
                   }})
                 // hier kan je de variabele printen die je wilt hebben
-                return "Region: " + point.Regios + "<br>Number of people with dementia: " + point["Tot per 100.000 inwoners lopend"]
+                return "Region: " + point.Regios + "<br>Dementia rate per 100.000 inhabitants: " + point["Tot per 100.000 inwoners lopend"]
                 // point["Tot per 100.000 inwoners gesloten"]
               })
               .style("left", (d3v5.event.pageX) + "px")
@@ -303,7 +303,7 @@ function initScatter(data, dataLine, dataPieChart){
         tooltip.style("left", (d3v5.event.pageX) + "px")
         tooltip.style("top", (d3v5.event.pageY) + "px")
         tooltip.html(function(){
-           return "Province: " + d.Regios + "<br>Total dementia patient: " + d["Tot per 100.000 inwoners lopend"] +
+           return "Province: " + d.Regios + "<br>Number of dementia rate: " + d["Tot per 100.000 inwoners lopend"] +
            "<br>Aging rate: " + d["65+ totaal"];
         });
         })
@@ -333,7 +333,7 @@ function initScatter(data, dataLine, dataPieChart){
                     .attr("x", width / 2.5)
                     .attr("y", 0 + 20)
                     .attr("class", "title")
-                    .text("Scatterplot for year " + selected_year)
+                    .text("Aging rate and dementia " + selected_year)
 
     svg_scatterplot.append("text")
                   .attr("x", -300)
@@ -344,7 +344,7 @@ function initScatter(data, dataLine, dataPieChart){
   svg_scatterplot.append("text")
   .attr("x", width / 2)
   .attr("y", 530)
-  .text("Number of people with dementia");
+  .text("Dementia rate (per 100.000 inhabitants)");
 
   addLegendScatter(colorScale);
 
@@ -439,7 +439,7 @@ function updateScatter(val, gender, age, data = globaldata[0]){
                       .range(colorbrewer.Blues[5]);
 
  update_title = svg_scatterplot.selectAll(".title")
-                    .text("Scatterplot for year " + val);
+                    .text("Aging rate and dementia " + val);
 
   // Join new data
   var dot = graph.selectAll(".dot")
@@ -460,7 +460,7 @@ function updateScatter(val, gender, age, data = globaldata[0]){
   var tooltip = dot.selectAll(".tooltip");
 
   tooltip.html(function(){
-     return "Province: " + d.Regios + "<br>Total dementia patient: " + d[gender] +
+     return "Province: " + d.Regios + "<br>Number of dementia rate: " + d[gender] +
      "<br>Aging rate: " + d[age]
   });
 

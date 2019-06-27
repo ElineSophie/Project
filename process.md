@@ -1,4 +1,4 @@
-# Process book with timeline of my actions
+# Process book with timeline of my actions (in Dutch)
 
 ---
 
@@ -24,9 +24,7 @@ It was really frustrating which kind of visualization is necessary.
 
 __07-06-2019__
 ---
-Today I collected all data in a csv file. In addition, I started to write a code to write this to a json file (not finished). Looking up all data took a very long time.
-
-What my purpose of the data is that I make all years as a key, ending in a nested dictionary for all years.
+Vaandaag heb ik alle data gezocht en gedownload als csv file. Ik ben begonnen om dit om te schrijven naar een json file, wat moeilijker bleek te zijn dat verwacht.Ik wil de jaren als key hebben (handig voor mijn dropdown). Dit allemaal in een nested loop.
 
 __11-06-2019__
 ---
@@ -79,7 +77,7 @@ Mijn doelen voor de aankomende dagen:
 
 __19-06-2019__
 ---
-De svg's op de goede plek zitten is gelukt voor de pagina dementianetherlands. De dropdown voor de jaren is gekoppeld aan de map en aan de scatterplot.
+De svg's op de goede plek zetten is gelukt voor de pagina dementianetherlands. De dropdown voor de jaren is gekoppeld aan de map en aan de scatterplot.
 
 __20-06-2019__
 ---
@@ -109,9 +107,9 @@ De scatterplot bevat nu een colorscale, waardoor het nu mogelijk is om een legen
 
 Alle grafieken hebben nu ook titels en astitels. Echter moet er nog wel een update worden gedaan voor enkele titels.
 
-__25-06-2019__
+__27-06-2019__
 ---
 Vandaag heb ik alle alle legenda's en kleuren gemaakt voor de map, scatterplot en piechart. Daarnaast heb ik mijn hele website mooier gemaakt met tekst en informatieve links.
 
 Waar ik later achterkwam:
-- Ik kon eigenlijk niet echt de data met elkaar vergelijken, omdat ik populatiedichtheid niet had meegenomen in mijn verhaal. Nu was het inderdaad zo dat alleen Noord-Holland een hoog aantal mensen met dementie hadden, in vergelijking met alle andere provincies. Echter kan dit in vergelijking met de populatiedichtheid misschien niet kloppen. Daarom heb ik alle variabelen verandert in het aantal dementie patienten per 100.000 inwoners. Dit schets een beter beeld. 
+- Ik kon eigenlijk niet echt de data met elkaar vergelijken, omdat ik populatiedichtheid niet had meegenomen in mijn verhaal. Nu was het inderdaad zo dat alleen Noord-Holland een hoog aantal mensen met dementie hadden, in vergelijking met alle andere provincies. Echter kan dit in vergelijking met de populatiedichtheid misschien niet kloppen. Daarom heb ik alle variabelen verandert in het aantal dementie patienten per 100.000 inwoners. Dit schets een beter beeld.

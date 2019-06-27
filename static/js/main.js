@@ -87,7 +87,7 @@ window.onload = function loadData(){
             if (document.getElementById("Gender1").value == "Tot per 100.000 inwoners lopend"){
               age = document.getElementById("AgeTot").value;
             }
-            else if (document.getElementById("Gender1").value == "Tot per 100.000 inwoners mannen gesloten"){
+            else if (document.getElementById("Gender1").value == "Tot per 100.000 inwoners mannen lopend"){
               age = document.getElementById("AgeMen").value;
             }
             else if (document.getElementById("Gender1").value == "Tot per 100.000 inwoners vrouwen lopend"){
@@ -99,7 +99,7 @@ window.onload = function loadData(){
             else if (document.getElementById("Gender2").value == "Tot per 100.000 inwoners mannen gesloten"){
               age = document.getElementById("AgeMen").value;
             }
-            else if (document.getElementById("Gender2").value == "Tot per 100.000 inwoners vrouwen"){
+            else if (document.getElementById("Gender2").value == "Tot per 100.000 inwoners vrouwen gesloten"){
               age = document.getElementById("AgeWomen").value;
             };
             updateScatter(this.value, gender, age);

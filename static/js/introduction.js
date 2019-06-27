@@ -175,10 +175,10 @@ function lineGraph(data){
       .attr("class", "y axis")
       .call(yAxis)
       .append('text')
-      .attr("y", 15)
+      .attr("y", -25)
       .attr("transform", "rotate(-90)")
       .attr("fill", "#000")
-      .text("Number of people living with dementia");
+      .text("Number of people living with dementia (in millions)");
 };
 
 function lineGraph2(data){
@@ -333,8 +333,8 @@ function lineGraph2(data){
     .attr("class", "y axis")
     .call(yAxis)
     .append('text')
-    .attr("y", 15)
+    .attr("y", -25)
     .attr("transform", "rotate(-90)")
     .attr("fill", "#000")
-    .text("Number of people living with dementia");
+    .text("Number of people living with dementia (in millions)");
 };
