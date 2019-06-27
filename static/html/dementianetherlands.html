@@ -59,13 +59,25 @@
 			  <div class="explain">
 					<h5>Visualisation of dementia in the netherlands</h5>
 					<h6>Usage</h6>
+					<hr><small>
+					In the menu, you can choose whether you want to see data in the map/Scatterplot
+						for ongoing or closed Diagnose Treatment Combination, total women/men or only
+						women or men, the aging rate (65+/80+) and the year (2009 - 2016)
+					<p> If one of the provinces is clicked in the map, both the pie chart as the
+						line chart will update for this specific province. When clicked on the dot
+						inside the scatterplot, only the line graph will update.
 					<hr>
-					The map and the scatterplot provide information about the number of people
-					with dementia. In the scatterplot, this value
-
-					<p> <small>Text about the visualisations.</small></p>
+					<h6>Data sources</h6>
+					<ul>
+						<li><a href=https://www.cbs.nl/>CBS</a></li>
+						<li><a href=https://opendata.cbs.nl/statline/#/CBS/nl/?fromstatweb>Statline</a></li>
+						<li><a href=https://www.alzheimer-nederland.nl/sites/default/files/directupload/factsheet-dementie-per-gemeente.pdf>Stichting Alzheimer Nederland</a></li>
+						</ul></small>
 				</div>
 			  <div class="menu">
+					<h5>Menu</h5>
+					<h6>Make a choice for each box</h6>
+					<hr>
 					<input id="r1" type="radio" name="Treatment" id="Lopend" value="Ongoing" onclick="showSelect();">Ongoing DTC
 					<input id="r2" type="radio" name="Treatment" id="Gesloten" value="Closed" onclick="showSelect2();">Closed DTC
 
@@ -130,9 +142,11 @@
 						is on the y-axis and number op people with dementia according to ongoing
 						and closed Diagnose Treatment Combinations on the x-axis. As you can see,
 						there is a correlation between the two variables.</p>
-					<p>The line graph shows that the number of people with dementia will rise
+					<p>The pie chart provides information about age categories and the prevalence of dementia
+					for each of them. The line graph shows that the number of people with dementia will rise
 						explosively in the future to more than half a million in 2040 as a result of the aging population.
 						Until 2050, the number of people with dementia will increase further to more than 620,000.</p>
+					<p>
 				</div>
 			  <div class="graphmap">
 					<div class="datamap" width="50%" height="400px" style="float:left; margin-top:100px;">
